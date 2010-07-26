@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="Theme.EdmontonInfo" parent="@android.Theme.Light">
+		<!--  Colors -->
+		<item name="android:windowBackground"></item>
+		<item name="android:colorForeground"></item>
+		<item name="android:colorForegroundInverse"></item>
+		<item name="android:colorBackground"></item>
+		
+		<!--  Text -->
+		<item name="android:textAppearance"></item>
+		
+		<!--  Window -->
+		<item name="android:windowTitleSize">38dip</item>
+		<item name="android:windowTitleStyle"></item>
+		<item name="android:windowTitleBackgroundStyle"></item>
+	</style>
+</resources>

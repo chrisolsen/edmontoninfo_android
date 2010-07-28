@@ -96,18 +96,18 @@ public class SchoolsActivity extends TabActivity {
 		// school list tab
 		specs = tabHost.newTabSpec("list");
 		specs.setContent(android.R.id.list);
-		specs.setIndicator("List");
+		specs.setIndicator( "List", this.getResources().getDrawable(R.drawable.list) );
 		tabHost.addTab(specs);
 		
 		// school map tab
+		//	must create map through an intent to allow it to have it's own Activity
+		Intent mapIntent = new Intent(this, SchoolsMapActivity.class);
 		specs = tabHost.newTabSpec("map");
-		specs.setContent(R.id.schools_map);
-		specs.setIndicator("Map");
+		specs.setContent(mapIntent);
+		specs.setIndicator( "Map", this.getResources().getDrawable(R.drawable.map) );
 		tabHost.addTab(specs);
 		
 		tabHost.setCurrentTab(0);
-		tabHost.getTabWidget().getChildAt(0).getLayoutParams().height = 35;
-		tabHost.getTabWidget().getChildAt(1).getLayoutParams().height = 35;
 	}	
 	
 	/**
@@ -120,10 +120,10 @@ public class SchoolsActivity extends TabActivity {
 		_db.cursor.moveToFirst();
 		
 		SimpleCursorAdapter ca = new SimpleCursorAdapter(SchoolsActivity.this, 
-															android.R.layout.simple_list_item_1, 
+															R.layout.listview_row, 
 															_db.cursor, 
-															new String[] { SchoolsDB.CNAME_NAME }, 
-															new int[] {android.R.id.text1});
+															new String[] { SchoolsDB.CNAME_NAME, SchoolsDB.CNAME_GRADE_LEVEL }, 
+															new int[] {android.R.id.text1, R.id.cell_details});
 		listView.setAdapter(ca);
 	}
 	

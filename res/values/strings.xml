@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, MainActivity!</string>
-    <string name="app_name">edmontoninfo</string>
-    
+    <string name="app_name">Edmonton Info</string>
     <string name="import_url_schools">http://edmontononrails.com/schools</string>
+    <string name="api_maps_key">0pvcHHN70qz7_Qp94jXiroIb6idPITVBR0i6kbQ</string>
 </resources>

@@ -10,18 +10,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import android.widget.TextView;
 
 public class SchoolActivity extends Activity {
 
-	private static final int MENU_ITEM_MAP 		= Menu.FIRST;
-	private static final int MENU_ITEM_STREET 	= Menu.FIRST + 1;
-	private static final int MENU_ITEM_PHONE 	= Menu.FIRST + 2;
-	private static final int MENU_ITEM_EMAIL 	= Menu.FIRST + 3;
-	private static final int MENU_ITEM_WEBSITE 	= Menu.FIRST + 4;
-	
 	School school;
 	
 	@Override
@@ -65,29 +60,10 @@ public class SchoolActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		MenuItem item;
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.school_menu, menu);
 		
-		// map
-		item = menu.add( Menu.NONE, MENU_ITEM_MAP, Menu.NONE, "Map" );
-		item.setIcon( R.drawable.map);
-		
-		// street view
-		item = menu.add( Menu.NONE, MENU_ITEM_STREET, Menu.NONE, "Street View" );
-		item.setIcon( R.drawable.eye);
-		
-		// phone
-		item = menu.add( Menu.NONE, MENU_ITEM_PHONE, Menu.NONE, "Phone" );
-		item.setIcon( R.drawable.phone);
-		
-		// email
-		item = menu.add( Menu.NONE, MENU_ITEM_EMAIL, Menu.NONE, "Email" );
-		item.setIcon( R.drawable.envelope);
-		
-		// website
-		item = menu.add( Menu.NONE, MENU_ITEM_WEBSITE, Menu.NONE, "Website" );
-		item.setIcon( R.drawable.monitor);
-		
-		return super.onCreateOptionsMenu(menu);
+		return super.onCreateOptionsMenu(menu);		
 	}
 	
 	@Override
@@ -97,29 +73,28 @@ public class SchoolActivity extends Activity {
 		String url;
 		
 		switch ( item.getItemId() ) {
-		case MENU_ITEM_EMAIL:
+		case R.id.school_menu_item_email:
 			intent = new Intent( Intent.ACTION_SEND );
 			intent.setType("plain/text");
 			intent.putExtra(Intent.EXTRA_EMAIL, new String[] {school.email} );
 			break;
 			
-		case MENU_ITEM_MAP:
-			//url = String.format("geo:%f,%f", school.latitude, school.longitude);
+		case R.id.school_menu_item_map:
 			url = String.format("geo:0,0?q=%s,%s", school.address, "Edmonton,AB");
 			intent = new Intent( Intent.ACTION_VIEW, Uri.parse(url) );
 			break;
 			
-		case MENU_ITEM_PHONE:
+		case R.id.school_menu_item_phone:
 			url = String.format("tel:%s", school.phoneNumber);
 			intent = new Intent( Intent.ACTION_DIAL, Uri.parse(url) );
 			break;
 			
-		case MENU_ITEM_STREET:
+		case R.id.school_menu_item_streetview:
 			url = String.format("google.streetview:cbll=%f,%f", school.latitude, school.longitude);
 			intent = new Intent( Intent.ACTION_VIEW, Uri.parse(url) );
 			break;
 			
-		case MENU_ITEM_WEBSITE:
+		case R.id.school_menu_item_website:
 			url = String.format("http://%s", school.url);
 			intent = new Intent( Intent.ACTION_VIEW, Uri.parse(url) );
 			break;

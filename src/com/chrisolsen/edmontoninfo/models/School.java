@@ -1,6 +1,7 @@
 package com.chrisolsen.edmontoninfo.models;
 
 import com.chrisolsen.edmontoninfo.db.SchoolsDB;
+import com.google.android.maps.GeoPoint;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -66,5 +67,12 @@ public class School extends BaseModel {
 		values.put(SchoolsDB.CNAME_WARD, this.ward);
 
 		return values;
+	}
+	
+	public GeoPoint getGeoPoint() {
+		Double latE6 = this.latitude * 1E6;
+		Double lngE6 = this.longitude * 1E6;
+		
+		return new GeoPoint( latE6.intValue(), lngE6.intValue() );
 	}
 }

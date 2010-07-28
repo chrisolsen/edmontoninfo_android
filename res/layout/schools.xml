@@ -37,12 +37,11 @@
 	                android:text="School import required" />
             </LinearLayout>
             
-            <TextView 
-                android:id="@+id/schools_map"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:text="Map goes here" />
-            
+            <RelativeLayout
+            	android:id="@+id/map_placement"
+            	android:layout_width="fill_parent"
+            	android:layout_height="fill_parent" />
+            	            
         </FrameLayout>
     </LinearLayout>
 </TabHost>

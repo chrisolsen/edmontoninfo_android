@@ -7,10 +7,7 @@
   
   <RelativeLayout
     android:id="@+id/school_details"
-    android:background="@color/show_header_color"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dip">
+    style="@style/page_header" >
   
     <TextView android:id="@+id/school_name" android:text="School Name" style="@style/header" />
 

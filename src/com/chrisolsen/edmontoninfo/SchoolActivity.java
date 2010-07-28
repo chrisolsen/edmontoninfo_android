@@ -29,7 +29,7 @@ public class SchoolActivity extends Activity {
 		SchoolsDB db = new SchoolsDB(this);
 		Cursor c = db.findById(id);
 		school = new School(c);
-		c.close();
+		db.close();
 		
 		// fill page
 		TextView schoolName = (TextView)findViewById( R.id.school_name );

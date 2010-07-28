@@ -15,15 +15,7 @@
     <!-- List View -->
     <color name="listview_row_color_light">#ffff</color>
     <color name="listview_row_color_dark">#feee</color>
-    <color name="listview_row_color_border">#f999</color>
-    
-    <!-- Buttons -->
-    <color name="button_color_light">#FF19447c</color> 
-	<color name="button_color_dark">#FF044272</color> 
-	<color name="button_color_disabled">#FF430000</color> 
-	<color name="button_default_border">#FF444444</color> 
-	<color name="button_focused_border">#FFFFD400</color> 
-	<color name="button_disabled_focused_border">#FFFFD400</color> 
+    <color name="listview_row_color_border">#f999</color> 
     
     <!-- TextField -->
     <color name="textfield_color_light">#FFFFFFFF</color> 
@@ -37,6 +29,7 @@
 	<color name="list_item_selected_color_light">#ffff</color> 
 	<color name="list_item_selected_color_dark">#feee</color>  
 	<color name="list_item_color_disabled">#fddd</color>
+	<color name="list_item_focused_border">#FFFFD400</color>
 	
 	<!--  Page -->
 	<color name="page_header_color_dark">#fddd</color>

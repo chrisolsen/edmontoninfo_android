@@ -54,7 +54,7 @@ public abstract class BaseDB extends SQLiteOpenHelper {
 							null, 
 							column + " = " + value, 
 							null, null, null, null);
-		
+
 		if ( this.cursor.moveToFirst() )
 			return this.cursor;
 		return null;
@@ -76,13 +76,22 @@ public abstract class BaseDB extends SQLiteOpenHelper {
 			vals.remove("_id");
 			id = db.insert(getTableName(), getColumnHackName(), vals);
 		}
+		
 		return id;
 	}
 	
 	public boolean delete(BaseModel model) {
 		SQLiteDatabase db = getWritableDatabase();
 		db.delete(getTableName(), "_id = " + Long.toString(model.id), null);
+		
 		return false;
+	}
+	
+	@Override
+	public void close() {
+		if ( this.cursor != null && !this.cursor.isClosed() )
+			this.cursor.close();
+		super.close();
 	}
 }
 	

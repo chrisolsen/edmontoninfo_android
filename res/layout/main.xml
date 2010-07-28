@@ -7,6 +7,12 @@
     <Button android:id="@+id/btn_schools"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
+        android:text="Schools" />
+        
+    <Button android:id="@+id/btn_schools"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
         android:text="Schools" />        
+            
 
 </LinearLayout>

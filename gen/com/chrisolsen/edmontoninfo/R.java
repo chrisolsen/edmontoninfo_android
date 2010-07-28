@@ -11,42 +11,35 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int button_color_dark=0x7f04000c;
-        public static final int button_color_disabled=0x7f04000d;
-        /**  Buttons 
-         */
-        public static final int button_color_light=0x7f04000b;
-        public static final int button_default_border=0x7f04000e;
-        public static final int button_disabled_focused_border=0x7f040010;
-        public static final int button_focused_border=0x7f04000f;
         public static final int color_background=0x7f040004;
         public static final int color_foreground=0x7f040002;
         public static final int color_foreground_inverse=0x7f040003;
         public static final int label=0x7f040001;
-        public static final int list_item_color_disabled=0x7f040019;
-        public static final int list_item_selected_color_dark=0x7f040018;
+        public static final int list_item_color_disabled=0x7f040013;
+        public static final int list_item_focused_border=0x7f040014;
+        public static final int list_item_selected_color_dark=0x7f040012;
         /**  List Items 
          */
-        public static final int list_item_selected_color_light=0x7f040017;
+        public static final int list_item_selected_color_light=0x7f040011;
         public static final int listview_row_color_border=0x7f04000a;
         public static final int listview_row_color_dark=0x7f040009;
         /**  List View 
          */
         public static final int listview_row_color_light=0x7f040008;
-        public static final int page_header_border_color=0x7f04001c;
+        public static final int page_header_border_color=0x7f040017;
         /**   Page 
          */
-        public static final int page_header_color_dark=0x7f04001a;
-        public static final int page_header_color_light=0x7f04001b;
+        public static final int page_header_color_dark=0x7f040015;
+        public static final int page_header_color_light=0x7f040016;
         public static final int show_header_color=0x7f040000;
-        public static final int textfield_color_dark=0x7f040012;
-        public static final int textfield_color_disabled=0x7f040013;
+        public static final int textfield_color_dark=0x7f04000c;
+        public static final int textfield_color_disabled=0x7f04000d;
         /**  TextField 
          */
-        public static final int textfield_color_light=0x7f040011;
-        public static final int textfield_default_border=0x7f040014;
-        public static final int textfield_disabled_focused_border=0x7f040016;
-        public static final int textfield_focused_border=0x7f040015;
+        public static final int textfield_color_light=0x7f04000b;
+        public static final int textfield_default_border=0x7f04000e;
+        public static final int textfield_disabled_focused_border=0x7f040010;
+        public static final int textfield_focused_border=0x7f04000f;
         public static final int title_color_border=0x7f040007;
         public static final int title_color_dark=0x7f040006;
         /**  Window Title 
@@ -54,39 +47,34 @@ public final class R {
         public static final int title_color_light=0x7f040005;
     }
     public static final class drawable {
-        public static final int button_background=0x7f020000;
-        public static final int button_default=0x7f020001;
-        public static final int button_disabled=0x7f020002;
-        public static final int button_disabled_focused=0x7f020003;
-        public static final int button_focused=0x7f020004;
-        public static final int button_pressed=0x7f020005;
-        public static final int compass=0x7f020006;
-        public static final int edit_text=0x7f020007;
-        public static final int envelope=0x7f020008;
-        public static final int eye=0x7f020009;
-        public static final int icon=0x7f02000a;
-        public static final int list=0x7f02000b;
-        public static final int list_item_background=0x7f02000c;
-        public static final int list_item_background_disabled=0x7f02000d;
-        public static final int list_item_background_focus=0x7f02000e;
-        public static final int list_item_background_pressed=0x7f02000f;
-        public static final int list_item_background_standard=0x7f020010;
-        public static final int list_item_background_transition=0x7f020011;
-        public static final int list_item_divider=0x7f020012;
-        public static final int list_selector_background=0x7f020013;
-        public static final int listview_row_background=0x7f020014;
-        public static final int magnifier=0x7f020015;
-        public static final int map=0x7f020016;
-        public static final int monitor=0x7f020017;
-        public static final int more_details=0x7f020018;
-        public static final int page_header=0x7f020019;
-        public static final int phone=0x7f02001a;
-        public static final int textfield_default=0x7f02001b;
-        public static final int textfield_disabled=0x7f02001c;
-        public static final int textfield_disabled_selected=0x7f02001d;
-        public static final int textfield_pressed=0x7f02001e;
-        public static final int textfield_selected=0x7f02001f;
-        public static final int window_title_background=0x7f020020;
+        public static final int compass=0x7f020000;
+        public static final int edit_text=0x7f020001;
+        public static final int envelope=0x7f020002;
+        public static final int eye=0x7f020003;
+        public static final int icon=0x7f020004;
+        public static final int list=0x7f020005;
+        public static final int list_item_background=0x7f020006;
+        public static final int list_item_background_disabled=0x7f020007;
+        public static final int list_item_background_focus=0x7f020008;
+        public static final int list_item_background_pressed=0x7f020009;
+        public static final int list_item_background_standard=0x7f02000a;
+        public static final int list_item_background_transition=0x7f02000b;
+        public static final int list_item_divider=0x7f02000c;
+        public static final int list_selector_background=0x7f02000d;
+        public static final int listview_row_background=0x7f02000e;
+        public static final int magnifier=0x7f02000f;
+        public static final int map=0x7f020010;
+        public static final int marker=0x7f020011;
+        public static final int monitor=0x7f020012;
+        public static final int more_details=0x7f020013;
+        public static final int page_header=0x7f020014;
+        public static final int phone=0x7f020015;
+        public static final int textfield_default=0x7f020016;
+        public static final int textfield_disabled=0x7f020017;
+        public static final int textfield_disabled_selected=0x7f020018;
+        public static final int textfield_pressed=0x7f020019;
+        public static final int textfield_selected=0x7f02001a;
+        public static final int window_title_background=0x7f02001b;
     }
     public static final class id {
         public static final int btn_schools=0x7f080001;

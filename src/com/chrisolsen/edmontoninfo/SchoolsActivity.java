@@ -116,12 +116,11 @@ public class SchoolsActivity extends TabActivity {
 	private void bindSchools() {
 		if ( _db == null )
 			_db = new SchoolsDB(this);
-		_db.findAll( SchoolsDB.CNAME_NAME );
-		_db.cursor.moveToFirst();
+		Cursor c = _db.findAll( SchoolsDB.CNAME_NAME );
 		
 		SimpleCursorAdapter ca = new SimpleCursorAdapter(SchoolsActivity.this, 
 															R.layout.listview_row, 
-															_db.cursor, 
+															c, 
 															new String[] { SchoolsDB.CNAME_NAME, SchoolsDB.CNAME_GRADE_LEVEL }, 
 															new int[] {android.R.id.text1, R.id.cell_details});
 		listView.setAdapter(ca);
@@ -165,7 +164,6 @@ public class SchoolsActivity extends TabActivity {
 						db.save( school );
 						savedSchoolCount++;
 						publishProgress( new Integer(savedSchoolCount), new Integer(schoolCount) );
-
 					}
 				}
 			}

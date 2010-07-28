@@ -7,5 +7,5 @@
        android:startColor="@color/list_item_selected_color_dark"
        android:endColor="@color/list_item_selected_color_light"
     />
-	<stroke android:color="@color/button_focused_border" android:width="4dip" />
+	<stroke android:color="@color/list_item_focused_border" android:width="4dip" />
 </shape>

@@ -24,10 +24,11 @@ public class School extends BaseModel {
 	public double latitude;
 	public double longitude;
 	
+	private GeoPoint geoPoint;
+	
 	public School() {};
 	
 	public School(Cursor c) {
-		
 		this.id = c.getLong( SchoolsDB.CINDEX_ID );
 		this.address = c.getString(SchoolsDB.CINDEX_ADDRESS);
 		this.email = c.getString(SchoolsDB.CINDEX_EMAIL);
@@ -70,9 +71,23 @@ public class School extends BaseModel {
 	}
 	
 	public GeoPoint getGeoPoint() {
-		Double latE6 = this.latitude * 1E6;
-		Double lngE6 = this.longitude * 1E6;
+		if ( this.geoPoint == null ) {
+			Double latE6 = this.latitude * 1E6;
+			Double lngE6 = this.longitude * 1E6;
+			this.geoPoint = new GeoPoint( latE6.intValue(), lngE6.intValue() );
+		}
+		return this.geoPoint;
+	}
+	
+	public static School[] convertToArray( Cursor c) {
+		School[] schools = new School[c.getCount()];
+		int index = 0;
+
+		while ( c.moveToNext() ) {
+			schools[index] = new School(c);
+			index++;
+		}
 		
-		return new GeoPoint( latE6.intValue(), lngE6.intValue() );
+		return schools;
 	}
 }

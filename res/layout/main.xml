@@ -9,10 +9,9 @@
         android:layout_width="fill_parent"
         android:text="Schools" />
         
-    <Button android:id="@+id/btn_schools"
+    <Button android:id="@+id/btn_police_stations"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="Schools" />        
-            
+        android:text="Police Stations" />        
 
 </LinearLayout>

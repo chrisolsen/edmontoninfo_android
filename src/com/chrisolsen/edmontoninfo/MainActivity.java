@@ -17,12 +17,23 @@ public class MainActivity extends Activity {
     }
     
     private void bindButtons() {
-    	Button btnSchool = (Button)findViewById(R.id.btn_schools); 
+    	Button btnSchool = (Button)findViewById(R.id.btn_schools);
+    	Button btnPoliceStations = (Button)findViewById(R.id.btn_police_stations);
     	
+    	// Schools
     	btnSchool.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MainActivity.this, SchoolsActivity.class);
+				startActivity(i);
+			}
+		});
+    	
+    	// Police
+    	btnPoliceStations.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(MainActivity.this, PoliceStationsActivity.class);
 				startActivity(i);
 			}
 		});

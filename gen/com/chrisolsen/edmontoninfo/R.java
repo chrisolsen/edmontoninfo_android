@@ -77,8 +77,8 @@ public final class R {
         public static final int window_title_background=0x7f02001b;
     }
     public static final class id {
-        public static final int btn_schools=0x7f080001;
-        public static final int cell_details=0x7f080000;
+        public static final int btn_police_stations=0x7f080001;
+        public static final int btn_schools=0x7f080000;
         public static final int map_placement=0x7f08000e;
         public static final int school_address=0x7f080004;
         public static final int school_contact=0x7f08000a;

@@ -5,7 +5,7 @@
 
 	<TextView android:id="@android:id/text1" style="@style/cell_header" />
 
-	<TextView android:id="@+id/cell_details" android:layout_below="@android:id/text1"
+	<TextView android:id="@android:id/text2" android:layout_below="@android:id/text1"
 		style="@style/cell_details" />
 
 	<ImageView style="@style/list_view_more_details" />

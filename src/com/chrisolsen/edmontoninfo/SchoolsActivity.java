@@ -30,9 +30,9 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class SchoolsActivity extends TabActivity {
 
-	ProgressDialog importDialog;
-	ListView listView;
-	SchoolsDB _db;
+	protected ProgressDialog importDialog;
+	protected ListView listView;
+	protected SchoolsDB _db;
 	
 	private static final int DIALOG_IMPORT_ID = 0;
 	
@@ -122,7 +122,7 @@ public class SchoolsActivity extends TabActivity {
 															R.layout.listview_row, 
 															c, 
 															new String[] { SchoolsDB.CNAME_NAME, SchoolsDB.CNAME_GRADE_LEVEL }, 
-															new int[] {android.R.id.text1, R.id.cell_details});
+															new int[] {android.R.id.text1, android.R.id.text2});
 		listView.setAdapter(ca);
 	}
 	

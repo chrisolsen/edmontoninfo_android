@@ -60,7 +60,7 @@ public class SchoolsDB extends BaseDB {
 	public static final int CINDEX_URL = 14;
 	public static final int CINDEX_WARD = 15;
 	
-	public static final String CREATE_TABLE = "create table schools (" +
+	public static final String TABLE_CREATE = "create table schools (" +
 			CNAME_ID 			+ " integer primary key, " +
 			CNAME_ADDRESS 		+ " text default '', " +
 			CNAME_EMAIL 		+ " text default '', " +
@@ -82,12 +82,12 @@ public class SchoolsDB extends BaseDB {
 		try {
 			ArrayList<School> schools = new ArrayList<School>();
 			JSONArray jsonSchools = new JSONArray(rawJson);
-			JSONObject obj;
-			School s;
 			
 			for (int i = 0; i < jsonSchools.length(); i++) {
-				obj = jsonSchools.getJSONObject(i);
-				s = new School();
+				
+				JSONObject obj = jsonSchools.getJSONObject(i);
+				School s = new School();
+				
 				s.address = obj.getString(CNAME_ADDRESS);
 				s.email = obj.getString(CNAME_EMAIL);
 				s.entityId = obj.getString(CNAME_ENTITY_ID);

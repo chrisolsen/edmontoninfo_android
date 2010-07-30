@@ -23,9 +23,17 @@
         
         <activity android:name=".SchoolsActivity" android:label="Schools"></activity>
         <activity android:name=".SchoolActivity" android:label="School Information" />
-        <activity android:name=".SchoolsMapActivity" />
+        <activity android:name=".SchoolsMapActivity" android:label="Schools" />
         
         <activity android:name=".PoliceStationsActivity" android:label="Police Stations" />
+        <activity android:name=".PoliceStationsMapActivity" android:label="Police Stations" />
+        
+        <activity android:name=".FireStationsActivity" android:label="Fire Stations" />
+        <activity android:name=".FireStationsMapActivity" android:label="Fire Stations" />
+        
+        <activity android:name=".CommunityLeagueCentersActivity" android:label="Community League Centers" />
+        <activity android:name=".CommunityLeagueCentersMapActivity" android:label="Community League Centers" />
+        
     </application>
     
     <uses-sdk android:minSdkVersion="3" />

@@ -1,12 +1,15 @@
 package com.chrisolsen.edmontoninfo.models;
 
+import java.io.Serializable;
+
 import com.chrisolsen.edmontoninfo.db.SchoolsDB;
-import com.google.android.maps.GeoPoint;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 
-public class School extends BaseModel {
+public class School extends BaseModel implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	public String address;
 	public String email;
@@ -23,8 +26,6 @@ public class School extends BaseModel {
 	public String url;
 	public double latitude;
 	public double longitude;
-	
-	private GeoPoint geoPoint;
 	
 	public School() {};
 	
@@ -68,15 +69,6 @@ public class School extends BaseModel {
 		values.put(SchoolsDB.CNAME_WARD, this.ward);
 
 		return values;
-	}
-	
-	public GeoPoint getGeoPoint() {
-		if ( this.geoPoint == null ) {
-			Double latE6 = this.latitude * 1E6;
-			Double lngE6 = this.longitude * 1E6;
-			this.geoPoint = new GeoPoint( latE6.intValue(), lngE6.intValue() );
-		}
-		return this.geoPoint;
 	}
 	
 	public static School[] convertToArray( Cursor c) {

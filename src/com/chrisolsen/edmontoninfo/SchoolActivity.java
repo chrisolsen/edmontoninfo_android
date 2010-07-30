@@ -1,11 +1,9 @@
 package com.chrisolsen.edmontoninfo;
 
-import com.chrisolsen.edmontoninfo.db.SchoolsDB;
 import com.chrisolsen.edmontoninfo.models.School;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
@@ -24,12 +22,7 @@ public class SchoolActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.school);
 		
-		// find school
-		long id = getIntent().getLongExtra( SchoolsDB.CNAME_ID, 0 );
-		SchoolsDB db = new SchoolsDB(this);
-		Cursor c = db.findById(id);
-		school = new School(c);
-		db.close();
+		school = (School)getIntent().getSerializableExtra("school");
 		
 		// fill page
 		TextView schoolName = (TextView)findViewById( R.id.school_name );

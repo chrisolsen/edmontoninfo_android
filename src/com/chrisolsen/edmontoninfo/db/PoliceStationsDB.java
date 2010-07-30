@@ -28,8 +28,8 @@ public class PoliceStationsDB extends BaseDB {
 	public static final String TABLE_CREATE = "create table police_stations (" +
 		CNAME_ID 		+ " integer primary key, " +
 		CNAME_NAME 		+ " text default '', " +
-		CNAME_LAT 		+ " text default '', " +
-		CNAME_LNG		+ " text default '', " +
+		CNAME_LAT 		+ " real default '', " +
+		CNAME_LNG		+ " real default '', " +
 		CNAME_ADDRESS 	+ " text default '' )";
 	
 	public PoliceStationsDB(Context context) {

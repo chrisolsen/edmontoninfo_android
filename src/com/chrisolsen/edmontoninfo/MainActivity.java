@@ -17,10 +17,8 @@ public class MainActivity extends Activity {
     }
     
     private void bindButtons() {
-    	Button btnSchool = (Button)findViewById(R.id.btn_schools);
-    	Button btnPoliceStations = (Button)findViewById(R.id.btn_police_stations);
-    	
     	// Schools
+    	Button btnSchool = (Button)findViewById(R.id.btn_schools);
     	btnSchool.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
@@ -30,10 +28,31 @@ public class MainActivity extends Activity {
 		});
     	
     	// Police
+    	Button btnPoliceStations = (Button)findViewById(R.id.btn_police_stations);
     	btnPoliceStations.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MainActivity.this, PoliceStationsActivity.class);
+				startActivity(i);
+			}
+		});
+    	
+    	// Fire
+    	Button btnFireStations = (Button)findViewById(R.id.btn_fire_stations);
+    	btnFireStations.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(MainActivity.this, FireStationsActivity.class);
+				startActivity(i);
+			}
+		});
+    	
+    	// Fire
+    	Button btnCommunityLeagueCenters = (Button)findViewById(R.id.btn_community_league_centers);
+    	btnCommunityLeagueCenters.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(MainActivity.this, CommunityLeagueCentersActivity.class);
 				startActivity(i);
 			}
 		});

@@ -7,7 +7,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public abstract class BaseDB extends SQLiteOpenHelper {
 
@@ -29,6 +28,8 @@ public abstract class BaseDB extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL( SchoolsDB.TABLE_CREATE );
 		db.execSQL( PoliceStationsDB.TABLE_CREATE );
+		db.execSQL( FireStationsDB.TABLE_CREATE );
+		db.execSQL( CommunityLeagueCentersDB.TABLE_CREATE );
 	}
 
 	@Override

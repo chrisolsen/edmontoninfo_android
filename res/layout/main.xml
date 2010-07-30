@@ -12,6 +12,16 @@
     <Button android:id="@+id/btn_police_stations"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="Police Stations" />        
+        android:text="Police Stations" />
+        
+    <Button android:id="@+id/btn_fire_stations"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Fire Stations" />
+        
+    <Button android:id="@+id/btn_community_league_centers"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Community League Centres" />        
 
 </LinearLayout>

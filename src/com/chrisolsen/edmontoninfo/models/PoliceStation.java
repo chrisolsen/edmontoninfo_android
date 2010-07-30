@@ -1,7 +1,6 @@
 package com.chrisolsen.edmontoninfo.models;
 
 import com.chrisolsen.edmontoninfo.db.PoliceStationsDB;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 
@@ -33,6 +32,18 @@ public class PoliceStation extends BaseModel {
 		vals.put(PoliceStationsDB.CNAME_LNG, longitude);
 		
 		return vals;
+	}
+
+	public static PoliceStation[] convertToArray(Cursor c) {
+		PoliceStation[] stations = new PoliceStation[c.getCount()];
+		
+		int i = 0;
+		while (c.moveToNext()) {
+			stations[i] = new PoliceStation(c);
+			i++;
+		}
+		
+		return stations;
 	}
 
 }

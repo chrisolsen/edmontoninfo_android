@@ -52,7 +52,7 @@ public class SchoolsActivity extends TabActivity {
 				
 				_db.cursor.moveToPosition( position );
 				School school = new School( _db.cursor );
-				show.putExtra( SchoolsDB.CNAME_ID, school.id);
+				show.putExtra("school", school);
 				startActivity(show);
 			}
 		});

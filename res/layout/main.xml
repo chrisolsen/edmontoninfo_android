@@ -22,6 +22,21 @@
     <Button android:id="@+id/btn_community_league_centers"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="Community League Centres" />        
+        android:text="Community League Centres" />
+        
+    <Button android:id="@+id/btn_libraries"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Libraries" />
+        
+    <Button android:id="@+id/btn_parks"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Parks" />
+        
+    <Button android:id="@+id/btn_rec_facilities"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Rec Facilities" />        
 
 </LinearLayout>

@@ -14,8 +14,8 @@ import com.chrisolsen.edmontoninfo.db.SchoolsDB;
 import com.chrisolsen.edmontoninfo.models.School;
 
 import android.app.Dialog;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.app.TabActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -25,10 +25,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class SchoolsActivity extends TabActivity {
+public class SchoolsActivity extends ListActivity {
 
 	protected ProgressDialog importDialog;
 	protected ListView listView;
@@ -40,24 +39,22 @@ public class SchoolsActivity extends TabActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		setContentView(R.layout.schools);
 		
-		listView = (ListView)findViewById(android.R.id.list);
+		listView = getListView();
 		listView.setOnItemClickListener( new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> av, View view, int position,
 					long rowId) {
 				
-				Intent show = new Intent(SchoolsActivity.this, SchoolActivity.class);
-				
 				_db.cursor.moveToPosition( position );
 				School school = new School( _db.cursor );
-				show.putExtra("school", school);
-				startActivity(show);
+				
+				Intent intent = new Intent(SchoolsActivity.this, SchoolMapActivity.class);
+				intent.putExtra(SchoolMapActivity.DATA_KEY, school);
+				startActivity(intent);
 			}
 		});
 		
-		setupTabs();
 		bindSchools();
 		
 		if ( _db.cursor.getCount() == 0 )
@@ -83,32 +80,6 @@ public class SchoolsActivity extends TabActivity {
 		
 		return null;
 	}
-
-	/**
-	 * Show the Schools and Map tabs
-	 */
-	private void setupTabs() {
-		TabHost tabHost;
-		TabHost.TabSpec specs;
-		
-		tabHost = getTabHost();
-	
-		// school list tab
-		specs = tabHost.newTabSpec("list");
-		specs.setContent(android.R.id.list);
-		specs.setIndicator( "List", this.getResources().getDrawable(R.drawable.list) );
-		tabHost.addTab(specs);
-		
-		// school map tab
-		//	must create map through an intent to allow it to have it's own Activity
-		Intent mapIntent = new Intent(this, SchoolsMapActivity.class);
-		specs = tabHost.newTabSpec("map");
-		specs.setContent(mapIntent);
-		specs.setIndicator( "Map", this.getResources().getDrawable(R.drawable.map) );
-		tabHost.addTab(specs);
-		
-		tabHost.setCurrentTab(0);
-	}	
 	
 	/**
 	 * Query and attach the schools to the listview

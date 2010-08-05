@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:paddingLeft="10dip"
+  android:paddingRight="10dip"
+  android:paddingBottom="10dip" >
+  
+    <TextView android:id="@+id/map_context_address" style="@style/map_context_address" android:gravity="center_horizontal" />
+    
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        
+            <LinearLayout android:id="@+id/map_context_website" style="@style/map_context_row" >
+		        <ImageView android:id="@+id/map_context_monitor" android:src="@drawable/display" style="@style/map_context_image" />
+		        <TextView android:text="Website" style="@style/map_context_label" />          
+		    </LinearLayout>
+		    
+		    <LinearLayout android:id="@+id/map_context_phone" style="@style/map_context_row" >
+		        <ImageView android:src="@drawable/phone" style="@style/map_context_image" />
+		        <TextView android:text="Phone" style="@style/map_context_label" />          
+		    </LinearLayout>    
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            
+            <LinearLayout android:id="@+id/map_context_email" style="@style/map_context_row" >
+		        <ImageView android:src="@drawable/envelope" style="@style/map_context_image" />
+		        <TextView android:text="Email" style="@style/map_context_label" />          
+		    </LinearLayout>
+		    
+		    <LinearLayout android:id="@+id/map_context_streetview" style="@style/map_context_row" >
+		        <ImageView android:src="@drawable/eye" style="@style/map_context_image" />
+		        <TextView android:text="Street View" style="@style/map_context_label" />          
+		    </LinearLayout>
+            
+        </TableRow>
+    </TableLayout>  
+</LinearLayout>

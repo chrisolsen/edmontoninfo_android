@@ -15,18 +15,27 @@ public class CommunityLeagueCentersDB extends BaseDB {
 
 	public static final String CNAME_ID 		= "_id";
 	public static final String CNAME_NAME 		= "name";
+	public static final String CNAME_ADDRESS 	= "address";
+	public static final String CNAME_PHONE 		= "phone_number";
+	public static final String CNAME_URL 		= "url";
 	public static final String CNAME_LAT 		= "latitude";
 	public static final String CNAME_LNG 		= "longitude";
 	
 	
 	public static final int CINDEX_ID 		= 0;
 	public static final int CINDEX_NAME 	= 1;
-	public static final int CINDEX_LAT 		= 2;
-	public static final int CINDEX_LNG 		= 3;
+	public static final int CINDEX_ADDRESS 	= 2;
+	public static final int CINDEX_PHONE 	= 3;
+	public static final int CINDEX_URL 		= 4;
+	public static final int CINDEX_LAT 		= 5;
+	public static final int CINDEX_LNG 		= 6;
 	
 	public static final String TABLE_CREATE = "create table community_league_centers (" +
 			CNAME_ID 		+ " integer primary key," +
 			CNAME_NAME 		+ " text," +
+			CNAME_ADDRESS 	+ " text," +
+			CNAME_PHONE 	+ " text," +
+			CNAME_URL 		+ " text," +
 			CNAME_LAT 		+ " real," +
 			CNAME_LNG 		+ " real )";
 	
@@ -54,9 +63,12 @@ public class CommunityLeagueCentersDB extends BaseDB {
 				JSONObject jObj = jsonArr.getJSONObject(i);
 				CommunityLeagueCenter station = new CommunityLeagueCenter();
 				
-				station.name = jObj.getString(PoliceStationsDB.CNAME_NAME);
-				station.latitude = jObj.getDouble(PoliceStationsDB.CNAME_LAT);
-				station.longitude = jObj.getDouble(PoliceStationsDB.CNAME_LNG);
+				station.name 		= jObj.getString(CommunityLeagueCentersDB.CNAME_NAME);
+				station.address 	= jObj.getString(CommunityLeagueCentersDB.CNAME_ADDRESS);
+				station.phoneNumber = jObj.getString(CommunityLeagueCentersDB.CNAME_PHONE);
+				station.url 		= jObj.getString(CommunityLeagueCentersDB.CNAME_URL);
+				station.latitude 	= jObj.getDouble(CommunityLeagueCentersDB.CNAME_LAT);
+				station.longitude 	= jObj.getDouble(CommunityLeagueCentersDB.CNAME_LNG);
 				
 				stations.add(station);
 			}

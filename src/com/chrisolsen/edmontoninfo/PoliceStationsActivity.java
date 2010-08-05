@@ -14,11 +14,10 @@ import com.chrisolsen.edmontoninfo.db.PoliceStationsDB;
 import com.chrisolsen.edmontoninfo.models.PoliceStation;
 
 import android.app.Dialog;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.app.TabActivity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -26,10 +25,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TabHost;
-import android.widget.TabHost.TabSpec;
 
-public class PoliceStationsActivity extends TabActivity {
+public class PoliceStationsActivity extends ListActivity {
+
+	private static final long serialVersionUID = -6655391771139565324L;
 
 	private static final int DIALOG_IMPORT_DATA = 0;
 	
@@ -39,14 +38,10 @@ public class PoliceStationsActivity extends TabActivity {
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		setContentView(R.layout.police_stations);
-		
-		bindTabs();
 		
 		// bind police stations if they do exist
 		if ( bindStations() == 0 )
 			showDialog(DIALOG_IMPORT_DATA);
-			
 	}
 
 	/**
@@ -70,31 +65,6 @@ public class PoliceStationsActivity extends TabActivity {
 	}
 	
 	/**
-	 * Bind the tabs for the list of police stations and the map
-	 */
-	private void bindTabs() {
-		
-		TabHost tabHost = getTabHost();
-		TabSpec specs;
-	
-		// school list tab
-		specs = tabHost.newTabSpec("list");
-		specs.setContent(android.R.id.list);
-		specs.setIndicator( "List", this.getResources().getDrawable(R.drawable.list) );
-		tabHost.addTab(specs);
-		
-		// school map tab
-		//	must create map through an intent to allow it to have it's own Activity
-		Intent mapIntent = new Intent(this, PoliceStationsMapActivity.class);
-		specs = tabHost.newTabSpec("map");
-		specs.setContent(mapIntent);
-		specs.setIndicator( "Map", this.getResources().getDrawable(R.drawable.map) );
-		
-		tabHost.addTab(specs);
-		tabHost.setCurrentTab(0);
-	}
-	
-	/**
 	 * Bind police stations and return the count of existing stations
 	 * @return
 	 * 	Police station count
@@ -107,7 +77,7 @@ public class PoliceStationsActivity extends TabActivity {
 		
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.listview_row, c, from, to);
 		
-		ListView listView = (ListView)findViewById( android.R.id.list );
+		ListView listView = getListView();
 		listView.setAdapter(adapter);
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -115,8 +85,10 @@ public class PoliceStationsActivity extends TabActivity {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				db.cursor.moveToPosition(position);
 				PoliceStation station = new PoliceStation(db.cursor);
-				String url = String.format("geo:0,0?q=%s,%s", station.address, "Edmonton,AB");
-				Intent i = new Intent( Intent.ACTION_VIEW, Uri.parse(url) );
+				
+				Intent i = new Intent(PoliceStationsActivity.this, PoliceStationMapActivity.class);
+				i.putExtra(PoliceStationMapActivity.POLICE_STATION, station);
+				
 				startActivity(i);
 			}
 		});

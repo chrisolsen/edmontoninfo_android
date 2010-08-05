@@ -12,6 +12,9 @@ public class CommunityLeagueCenter extends BaseModel implements Serializable {
 	private static final long serialVersionUID = -7382859815175743500L;
 	
 	public String name;
+	public String address;
+	public String phoneNumber;
+	public String url;
 	public double latitude;
 	public double longitude;
 	
@@ -20,6 +23,9 @@ public class CommunityLeagueCenter extends BaseModel implements Serializable {
 	public CommunityLeagueCenter(Cursor c) {
 		this.id = c.getLong(CommunityLeagueCentersDB.CINDEX_ID);
 		this.name = c.getString(CommunityLeagueCentersDB.CINDEX_NAME);
+		this.address = c.getString(CommunityLeagueCentersDB.CINDEX_ADDRESS);
+		this.phoneNumber = c.getString(CommunityLeagueCentersDB.CINDEX_PHONE);
+		this.url = c.getString(CommunityLeagueCentersDB.CINDEX_URL);
 		this.latitude = c.getDouble(CommunityLeagueCentersDB.CINDEX_LAT);
 		this.longitude = c.getDouble(CommunityLeagueCentersDB.CINDEX_LNG);
 	}
@@ -30,6 +36,9 @@ public class CommunityLeagueCenter extends BaseModel implements Serializable {
 		
 		vals.put(CommunityLeagueCentersDB.CNAME_ID, id);
 		vals.put(CommunityLeagueCentersDB.CNAME_NAME, name);
+		vals.put(CommunityLeagueCentersDB.CNAME_ADDRESS, address);
+		vals.put(CommunityLeagueCentersDB.CNAME_PHONE, phoneNumber);
+		vals.put(CommunityLeagueCentersDB.CNAME_URL, url);
 		vals.put(CommunityLeagueCentersDB.CNAME_LAT, latitude);
 		vals.put(CommunityLeagueCentersDB.CNAME_LNG, longitude);
 		

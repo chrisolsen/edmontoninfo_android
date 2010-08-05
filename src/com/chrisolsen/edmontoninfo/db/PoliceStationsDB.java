@@ -15,19 +15,25 @@ public class PoliceStationsDB extends BaseDB {
 
 	public static final String CNAME_ID 		= "_id";
 	public static final String CNAME_NAME 		= "name";
+	public static final String CNAME_PHONE 		= "phone_number";
+	public static final String CNAME_URL 		= "url";
 	public static final String CNAME_LNG 		= "longitude";
 	public static final String CNAME_LAT 		= "latitude";
 	public static final String CNAME_ADDRESS 	= "address";
 	
 	public static final int CINDEX_ID 		= 0;
 	public static final int CINDEX_NAME 	= 1;
-	public static final int CINDEX_LAT 		= 2;
-	public static final int CINDEX_LNG 		= 3;
-	public static final int CINDEX_ADDRESS 	= 4;
+	public static final int CINDEX_PHONE 	= 2;
+	public static final int CINDEX_URL 		= 3;
+	public static final int CINDEX_LAT 		= 4;
+	public static final int CINDEX_LNG 		= 5;
+	public static final int CINDEX_ADDRESS 	= 6;
 	
 	public static final String TABLE_CREATE = "create table police_stations (" +
 		CNAME_ID 		+ " integer primary key, " +
 		CNAME_NAME 		+ " text default '', " +
+		CNAME_PHONE 	+ " text default '', " +
+		CNAME_URL 		+ " text default '', " +
 		CNAME_LAT 		+ " real default '', " +
 		CNAME_LNG		+ " real default '', " +
 		CNAME_ADDRESS 	+ " text default '' )";
@@ -58,6 +64,8 @@ public class PoliceStationsDB extends BaseDB {
 				
 				station.name = jObj.getString(PoliceStationsDB.CNAME_NAME);
 				station.address = jObj.getString(PoliceStationsDB.CNAME_ADDRESS);
+				station.phoneNumber = jObj.getString(PoliceStationsDB.CNAME_PHONE);
+				station.url = jObj.getString(PoliceStationsDB.CNAME_URL);
 				station.latitude = jObj.getDouble(PoliceStationsDB.CNAME_LAT);
 				station.longitude = jObj.getDouble(PoliceStationsDB.CNAME_LNG);
 				

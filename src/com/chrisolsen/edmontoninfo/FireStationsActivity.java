@@ -14,22 +14,19 @@ import com.chrisolsen.edmontoninfo.db.FireStationsDB;
 import com.chrisolsen.edmontoninfo.models.FireStation;
 
 import android.app.Dialog;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.app.TabActivity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TabHost.TabSpec;
 
-public class FireStationsActivity extends TabActivity {
+public class FireStationsActivity extends ListActivity {
 	
 private static final int DIALOG_IMPORT_DATA = 0;
 	
@@ -39,9 +36,6 @@ private static final int DIALOG_IMPORT_DATA = 0;
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		setContentView(R.layout.fire_stations);
-		
-		bindTabs();
 		
 		// bind fire stations if they do exist
 		if ( bindStations() == 0 )
@@ -69,30 +63,6 @@ private static final int DIALOG_IMPORT_DATA = 0;
 		return null;
 	}
 	
-	/**
-	 * Bind the tabs for the list of fire stations and the map
-	 */
-	private void bindTabs() {
-		
-		TabHost tabHost = getTabHost();
-		TabSpec specs;
-	
-		// school list tab
-		specs = tabHost.newTabSpec("list");
-		specs.setContent(android.R.id.list);
-		specs.setIndicator( "List", this.getResources().getDrawable(R.drawable.list) );
-		tabHost.addTab(specs);
-		
-		// school map tab
-		//	must create map through an intent to allow it to have it's own Activity
-		Intent mapIntent = new Intent(this, FireStationsMapActivity.class);
-		specs = tabHost.newTabSpec("map");
-		specs.setContent(mapIntent);
-		specs.setIndicator( "Map", this.getResources().getDrawable(R.drawable.map) );
-		
-		tabHost.addTab(specs);
-		tabHost.setCurrentTab(0);
-	}
 	
 	/**
 	 * Bind fire stations and return the count of existing stations
@@ -107,7 +77,7 @@ private static final int DIALOG_IMPORT_DATA = 0;
 		
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.listview_row, c, from, to);
 		
-		ListView listView = (ListView)findViewById( android.R.id.list );
+		ListView listView = getListView();
 		listView.setAdapter(adapter);
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -115,9 +85,9 @@ private static final int DIALOG_IMPORT_DATA = 0;
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				db.cursor.moveToPosition(position);
 				FireStation station = new FireStation(db.cursor);
-				String url = String.format("geo:0,0?q=%s,%s", station.address, "Edmonton,AB");
-				Intent i = new Intent( Intent.ACTION_VIEW, Uri.parse(url) );
-				startActivity(i);
+				Intent intent = new Intent( FireStationsActivity.this, FireStationMapActivity.class );
+				intent.putExtra(FireStationMapActivity.DATA_KEY, station);
+				startActivity(intent);
 			}
 		});
 		

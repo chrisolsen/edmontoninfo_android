@@ -15,6 +15,7 @@ public class FireStationsDB extends BaseDB {
 	public static final String CNAME_ID 		= "_id";
 	public static final String CNAME_NAME 		= "name";
 	public static final String CNAME_ADDRESS 	= "address";
+	public static final String CNAME_NUMBER 	= "number";
 	public static final String CNAME_LAT 		= "latitude";
 	public static final String CNAME_LNG 		= "longitude";
 	
@@ -22,13 +23,15 @@ public class FireStationsDB extends BaseDB {
 	public static final int CINDEX_ID 		= 0;
 	public static final int CINDEX_NAME 	= 1;
 	public static final int CINDEX_ADDRESS 	= 2;
-	public static final int CINDEX_LAT 		= 3;
-	public static final int CINDEX_LNG 		= 4;
+	public static final int CINDEX_NUMBER 	= 3;
+	public static final int CINDEX_LAT 		= 4;
+	public static final int CINDEX_LNG 		= 5;
 	
 	public static final String TABLE_CREATE = "create table fire_stations (" +
 			CNAME_ID 		+ " integer primary key," +
 			CNAME_NAME 		+ " text," +
 			CNAME_ADDRESS 	+ " text," +
+			CNAME_NUMBER 	+ " text," +
 			CNAME_LAT 		+ " real," +
 			CNAME_LNG 		+ " real )";
 	
@@ -43,7 +46,7 @@ public class FireStationsDB extends BaseDB {
 
 	@Override
 	protected String getColumnHackName() {
-		return "name";
+		return CNAME_NAME;
 	}
 	
 	public ArrayList<FireStation> convertFromJSON(String rawJSON) {
@@ -56,10 +59,11 @@ public class FireStationsDB extends BaseDB {
 				JSONObject jObj = jsonArr.getJSONObject(i);
 				FireStation station = new FireStation();
 				
-				station.name = jObj.getString(PoliceStationsDB.CNAME_NAME);
-				station.address = jObj.getString(PoliceStationsDB.CNAME_ADDRESS);
-				station.latitude = jObj.getDouble(PoliceStationsDB.CNAME_LAT);
-				station.longitude = jObj.getDouble(PoliceStationsDB.CNAME_LNG);
+				station.name = jObj.getString(FireStationsDB.CNAME_NAME);
+				station.address = jObj.getString(FireStationsDB.CNAME_ADDRESS);
+				station.number = jObj.getString(FireStationsDB.CNAME_NUMBER);
+				station.latitude = jObj.getDouble(FireStationsDB.CNAME_LAT);
+				station.longitude = jObj.getDouble(FireStationsDB.CNAME_LNG);
 				
 				stations.add(station);
 			}

@@ -3,13 +3,17 @@
     <string name="app_name">Edmonton Info</string>
     
     <!-- Imports -->
-    <string name="import_url_schools">http://edmontononrails.com/schools</string>
-    <string name="import_url_police_stations">http://edmontononrails.com/police_stations</string>
-    <string name="import_url_fire_stations">http://edmontononrails.com/fire_stations</string>
-    <string name="import_url_community_league_centers">http://edmontononrails.com/community_league_centers</string>
+    <string name="import_url_schools">http://edmontoninfoapp.com/schools</string>
+    <string name="import_url_police_stations">http://edmontoninfoapp.com/police_stations</string>
+    <string name="import_url_fire_stations">http://edmontoninfoapp.com/fire_stations</string>
+    <string name="import_url_community_league_centers">http://edmontoninfoapp.com/community_league_centers</string>
+    <string name="import_url_libraries">http://edmontoninfoapp.com/libraries</string>
+    <string name="import_url_parks">http://edmontoninfoapp.com/parks</string>
+    <string name="import_url_rec_facilities">http://edmontoninfoapp.com/rec_facilities</string>
   
     <!-- Maps -->
-    <string name="api_maps_key">0pvcHHN70qz7_Qp94jXiroIb6idPITVBR0i6kbQ</string>
+    <string name="api_maps_key_dev">0pvcHHN70qz7_Qp94jXiroIb6idPITVBR0i6kbQ</string>
+    <string name="api_maps_key_rel">0pvcHHN70qz5B9uA9sns3QWWIw89_LtQbqbPV6A</string>
     <string name="edmonton_latitude_1e6">53550100</string>
     <string name="edmonton_longitude_1e6">-113469000</string>
     <string name="default_map_zoom">13</string>

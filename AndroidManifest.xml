@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.chrisolsen.edmontoninfo"
       android:versionCode="1"
-      android:versionName="1.0">
+      android:versionName="0.5">
     
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -22,17 +22,21 @@
         </activity>
         
         <activity android:name=".SchoolsActivity" android:label="Schools"></activity>
-        <activity android:name=".SchoolActivity" android:label="School Information" />
-        <activity android:name=".SchoolsMapActivity" android:label="Schools" />
-        
+        <activity android:name=".SchoolMapActivity" />
         <activity android:name=".PoliceStationsActivity" android:label="Police Stations" />
-        <activity android:name=".PoliceStationsMapActivity" android:label="Police Stations" />
-        
+        <activity android:name=".PoliceStationMapActivity" />
         <activity android:name=".FireStationsActivity" android:label="Fire Stations" />
-        <activity android:name=".FireStationsMapActivity" android:label="Fire Stations" />
+        <activity android:name=".FireStationMapActivity" />
+        <activity android:name=".CommunityLeagueCentersActivity" android:label="Community League Centres" />
+        <activity android:name=".CommunityLeagueCenterMapActivity" />
+        <activity android:name=".LibrariesActivity" android:label="Libraries" />
+        <activity android:name=".LibraryMapActivity" />
+        <activity android:name=".ParksActivity" android:label="Parks" />
+        <activity android:name=".ParkMapActivity" />
+        <activity android:name=".RecFacilitiesActivity" android:label="Rec Facilities" />
+        <activity android:name=".RecFacilityMapActivity" />
         
-        <activity android:name=".CommunityLeagueCentersActivity" android:label="Community League Centers" />
-        <activity android:name=".CommunityLeagueCentersMapActivity" android:label="Community League Centers" />
+        <activity android:name=".maps.MapContextActivity" android:theme="@android:style/Theme.Dialog" />
         
     </application>
     

@@ -14,22 +14,19 @@ import com.chrisolsen.edmontoninfo.db.CommunityLeagueCentersDB;
 import com.chrisolsen.edmontoninfo.models.CommunityLeagueCenter;
 
 import android.app.Dialog;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.app.TabActivity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TabHost;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TabHost.TabSpec;
 
-public class CommunityLeagueCentersActivity extends TabActivity {
+public class CommunityLeagueCentersActivity extends ListActivity {
 
 	private static final int DIALOG_IMPORT_DATA = 0;
 	
@@ -39,14 +36,13 @@ public class CommunityLeagueCentersActivity extends TabActivity {
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		setContentView(R.layout.fire_stations);
 		
-		bindTabs();
+		setContentView(R.layout.list);
+		setTitle("Community League Centres");
 		
 		// bind centers if they do exist
 		if ( bindItems() == 0 )
 			showDialog(DIALOG_IMPORT_DATA);
-			
 	}
 
 	/**
@@ -70,31 +66,6 @@ public class CommunityLeagueCentersActivity extends TabActivity {
 	}
 	
 	/**
-	 * Bind the tabs for the list of items and the map
-	 */
-	private void bindTabs() {
-		
-		TabHost tabHost = getTabHost();
-		TabSpec specs;
-	
-		// school list tab
-		specs = tabHost.newTabSpec("list");
-		specs.setContent(android.R.id.list);
-		specs.setIndicator( "List", this.getResources().getDrawable(R.drawable.list) );
-		tabHost.addTab(specs);
-		
-		// school map tab
-		//	must create map through an intent to allow it to have it's own Activity
-		Intent mapIntent = new Intent(this, CommunityLeagueCentersMapActivity.class);
-		specs = tabHost.newTabSpec("map");
-		specs.setContent(mapIntent);
-		specs.setIndicator( "Map", this.getResources().getDrawable(R.drawable.map) );
-		
-		tabHost.addTab(specs);
-		tabHost.setCurrentTab(0);
-	}
-	
-	/**
 	 * Bind fire stations and return the count of existing stations
 	 * @return
 	 * 	Center count
@@ -102,12 +73,12 @@ public class CommunityLeagueCentersActivity extends TabActivity {
 	private int bindItems() {
 		this.db = new CommunityLeagueCentersDB(this);
 		Cursor c = db.findAll(CommunityLeagueCentersDB.CNAME_NAME);
-		String[] from = new String[] { CommunityLeagueCentersDB.CNAME_NAME };
-		int[] to = new int[] { android.R.id.text1 };
+		String[] from = new String[] { CommunityLeagueCentersDB.CNAME_NAME, CommunityLeagueCentersDB.CNAME_ADDRESS };
+		int[] to = new int[] { android.R.id.text1, android.R.id.text2 };
 		
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.listview_row, c, from, to);
 		
-		ListView listView = (ListView)findViewById( android.R.id.list );
+		ListView listView = getListView();
 		listView.setAdapter(adapter);
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -115,11 +86,10 @@ public class CommunityLeagueCentersActivity extends TabActivity {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				db.cursor.moveToPosition(position);
 				CommunityLeagueCenter center = new CommunityLeagueCenter(db.cursor);
-				//Intent i = new Intent( CommunityLeagueCentersActivity.this, CommunityLeagueCentersMapActivity.class );
-				//i.putExtra("center", center);
-				String url = String.format("geo:0,0?q=%s league Edmonton, AB", center.name);
-				Intent i = new Intent( Intent.ACTION_VIEW, Uri.parse(url) );
-				startActivity(i);
+				Intent intent = new Intent( CommunityLeagueCentersActivity.this, CommunityLeagueCenterMapActivity.class );
+				intent.putExtra(CommunityLeagueCenterMapActivity.DATA_KEY, center);
+				
+				startActivity(intent);
 			}
 		});
 		
@@ -178,8 +148,5 @@ public class CommunityLeagueCentersActivity extends TabActivity {
 			int percentComplete = values[0];
 			importDialog.setMessage( String.format("%d%s Complete", percentComplete, "%") );
 		}
-		
 	}
-
-	
 }

@@ -40,4 +40,15 @@ public class Park extends BaseModel implements Serializable {
 		return vals;
 	}
 
+	public static Park[] convertToArray( Cursor c) {
+		Park[] parks = new Park[c.getCount()];
+		int index = 0;
+
+		while ( c.moveToNext() ) {
+			parks[index] = new Park(c);
+			index++;
+		}
+		
+		return parks;
+	}
 }

@@ -86,6 +86,16 @@ public class MainActivity extends Activity {
 				startActivity(i);
 			}
 		});
+    	
+    	// Field Status
+    	Button btnFieldStatus = (Button)findViewById(R.id.btn_field_status);
+    	btnFieldStatus.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(MainActivity.this, FieldStatusActivity.class);
+				startActivity(i);
+			}
+		});
     }
     
 }

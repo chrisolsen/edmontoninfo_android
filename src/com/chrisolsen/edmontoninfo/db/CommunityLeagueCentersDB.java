@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.chrisolsen.edmontoninfo.models.CommunityLeagueCenter;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -86,6 +85,5 @@ public class CommunityLeagueCentersDB extends BaseDB {
 		
 		return null;
 	}
-
 
 }

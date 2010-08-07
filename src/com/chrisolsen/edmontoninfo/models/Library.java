@@ -3,7 +3,6 @@ package com.chrisolsen.edmontoninfo.models;
 import java.io.Serializable;
 
 import com.chrisolsen.edmontoninfo.db.LibraryDB;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 
@@ -54,5 +53,4 @@ public class Library extends BaseModel implements Serializable {
 		
 		return libraries;
 	}
-
 }

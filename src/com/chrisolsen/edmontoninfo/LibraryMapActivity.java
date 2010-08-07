@@ -1,9 +1,12 @@
 package com.chrisolsen.edmontoninfo;
 
+import static com.chrisolsen.edmontoninfo.Global.EDMONTON_CENTER;
+import static com.chrisolsen.edmontoninfo.maps.MapHelper.convertToGeoPoint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import com.chrisolsen.edmontoninfo.db.LibraryDB;
 import com.chrisolsen.edmontoninfo.maps.IMapDelegate;
 import com.chrisolsen.edmontoninfo.maps.MapContextActivity;
 import com.chrisolsen.edmontoninfo.maps.MapContextValues;
@@ -17,29 +20,46 @@ import com.google.android.maps.OverlayItem;
 public class LibraryMapActivity extends MapActivity implements IMapDelegate {
 
 	public static final String DATA_KEY = "library_data_key";
-	private Library library;
-	private MapItemizedOverlay markerOverlays;
 	
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.google_map);
 		
-		library = (Library)getIntent().getSerializableExtra(DATA_KEY);
-		setTitle(library.branch);
+		int zoom;
+		GeoPoint mapCenter;
+		Library[] libraries;
+		Library library = (Library)getIntent().getSerializableExtra(DATA_KEY);
 		
-		// add marker
+		if (library != null) {
+			setTitle(library.branch);
+			mapCenter = convertToGeoPoint(library.latitude, library.longitude);
+			libraries = new Library[] { library };
+			zoom = 17;
+		}
+		else {
+			LibraryDB db = new LibraryDB(this);
+			libraries = Library.convertToArray( db.findAll() );
+			db.close();
+			mapCenter = EDMONTON_CENTER;
+			zoom = 11;
+		}
+		
+		// add markers
 		Drawable marker = getResources().getDrawable( R.drawable.marker );
-		GeoPoint geoPoint = new GeoPoint( (int)(library.latitude*1E6), (int)(library.longitude*1E6) );
-		OverlayItem item = new OverlayItem(geoPoint, library.branch, library.address);
+		MapItemizedOverlay markerOverlays = new MapItemizedOverlay(marker, this);
 		
-		markerOverlays = new MapItemizedOverlay(marker, this);
-		markerOverlays.addOverlay( item, library );
+		for (Library l: libraries) {
+			GeoPoint geoPoint = convertToGeoPoint(l.latitude, l.longitude);
+			OverlayItem item = new OverlayItem(geoPoint, l.branch, l.address);
+			markerOverlays.addOverlay( item, l );
+		}
 		
+		// configure map
 		MapView mapView = (MapView)findViewById( R.id.mapview );
 		mapView.getOverlays().add(markerOverlays);
 		mapView.setBuiltInZoomControls(true);		
-		mapView.getController().animateTo( geoPoint );
-		mapView.getController().setZoom( 17 );
+		mapView.getController().animateTo( mapCenter );
+		mapView.getController().setZoom( zoom );
 	}
 	
 	@Override

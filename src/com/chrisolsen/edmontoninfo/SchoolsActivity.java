@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class SchoolsActivity extends ListActivity {
 
@@ -94,7 +95,24 @@ public class SchoolsActivity extends ListActivity {
 															c, 
 															new String[] { SchoolsDB.CNAME_NAME, SchoolsDB.CNAME_GRADE_LEVEL }, 
 															new int[] {android.R.id.text1, android.R.id.text2});
-		listView.setAdapter(ca);
+		
+		if (c.getCount() > 0) {
+			View header = getLayoutInflater().inflate(R.layout.listview_header, null);
+			TextView viewMap = (TextView)header.findViewById(R.id.listview_header_text);
+			viewMap.setText( String.format("View Map (%d Schools)", c.getCount()) );
+			
+			viewMap.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(SchoolsActivity.this, SchoolMapActivity.class);
+					startActivity(intent);
+				}
+			});
+			
+			getListView().addHeaderView(header);
+			getListView().addFooterView(header);
+			getListView().setAdapter(ca);
+		}
 	}
 	
 	/**

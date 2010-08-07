@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class LibrariesActivity extends ListActivity {
 
@@ -91,7 +92,25 @@ public class LibrariesActivity extends ListActivity {
 															c, 
 															new String[] { LibraryDB.CNAME_BRANCH, LibraryDB.CNAME_ADDRESS }, 
 															new int[] {android.R.id.text1, android.R.id.text2});
-		getListView().setAdapter(ca);
+		
+		// bind header and footer
+		if (c.getCount() > 0) {
+			View header = getLayoutInflater().inflate(R.layout.listview_header, null);
+			TextView viewMap = (TextView)header.findViewById(R.id.listview_header_text);
+			viewMap.setText( String.format("View Map (%d Libraries)", c.getCount()) );
+			
+			viewMap.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(LibrariesActivity.this, LibraryMapActivity.class);
+					startActivity(intent);
+				}
+			});
+			
+			getListView().addHeaderView(header);
+			getListView().addFooterView(header);
+			getListView().setAdapter(ca);
+		}
 	}
 	
 	/**

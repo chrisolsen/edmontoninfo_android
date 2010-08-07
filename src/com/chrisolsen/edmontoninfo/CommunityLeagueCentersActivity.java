@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class CommunityLeagueCentersActivity extends ListActivity {
 
@@ -79,19 +80,36 @@ public class CommunityLeagueCentersActivity extends ListActivity {
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.listview_row, c, from, to);
 		
 		ListView listView = getListView();
-		listView.setAdapter(adapter);
-		
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				db.cursor.moveToPosition(position);
-				CommunityLeagueCenter center = new CommunityLeagueCenter(db.cursor);
-				Intent intent = new Intent( CommunityLeagueCentersActivity.this, CommunityLeagueCenterMapActivity.class );
-				intent.putExtra(CommunityLeagueCenterMapActivity.DATA_KEY, center);
-				
-				startActivity(intent);
-			}
-		});
+		if (c.getCount() > 0) {
+			View header = getLayoutInflater().inflate(R.layout.listview_header, null);
+			TextView viewMap = (TextView)header.findViewById(R.id.listview_header_text);
+			viewMap.setText( String.format("View Map (%d Centres)", c.getCount()) );
+			
+			viewMap.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent( CommunityLeagueCentersActivity.this, CommunityLeagueCenterMapActivity.class );
+					startActivity(intent);
+				}
+			});
+			
+			listView.addHeaderView(header);
+			listView.addFooterView(header);
+			listView.setAdapter(adapter);
+			
+			listView.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+					db.cursor.moveToPosition(position);
+					CommunityLeagueCenter center = new CommunityLeagueCenter(db.cursor);
+					
+					Intent intent = new Intent( CommunityLeagueCentersActivity.this, CommunityLeagueCenterMapActivity.class );
+					intent.putExtra(CommunityLeagueCenterMapActivity.DATA_KEY, center);
+					
+					startActivity(intent);
+				}
+			});
+		}
 		
 		return c.getCount();
 	}

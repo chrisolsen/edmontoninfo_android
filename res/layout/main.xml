@@ -12,6 +12,7 @@
     <Button android:id="@+id/btn_police_stations"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
+        style="Widget.ListView.Header"
         android:text="Police Stations" />
         
     <Button android:id="@+id/btn_fire_stations"
@@ -38,5 +39,10 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:text="Rec Facilities" />        
+        
+    <Button android:id="@+id/btn_field_status"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Field Status" />        
 
 </LinearLayout>

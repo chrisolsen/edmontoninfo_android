@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class FireStationsActivity extends ListActivity {
 	
@@ -40,7 +41,6 @@ private static final int DIALOG_IMPORT_DATA = 0;
 		// bind fire stations if they do exist
 		if ( bindStations() == 0 )
 			showDialog(DIALOG_IMPORT_DATA);
-			
 	}
 
 	/**
@@ -78,18 +78,36 @@ private static final int DIALOG_IMPORT_DATA = 0;
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.listview_row, c, from, to);
 		
 		ListView listView = getListView();
-		listView.setAdapter(adapter);
 		
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				db.cursor.moveToPosition(position);
-				FireStation station = new FireStation(db.cursor);
-				Intent intent = new Intent( FireStationsActivity.this, FireStationMapActivity.class );
-				intent.putExtra(FireStationMapActivity.DATA_KEY, station);
-				startActivity(intent);
-			}
-		});
+		// bind header and footer
+		if (c.getCount() > 0) {
+			View header = getLayoutInflater().inflate(R.layout.listview_header, null);
+			TextView viewMap = (TextView)header.findViewById(R.id.listview_header_text);
+			viewMap.setText( String.format("View Map (%d Stations)", c.getCount()) );
+			
+			viewMap.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(FireStationsActivity.this, FireStationMapActivity.class);
+					startActivity(intent);
+				}
+			});
+			
+			listView.addHeaderView(header);
+			listView.addFooterView(header);
+			listView.setAdapter(adapter);
+			
+			listView.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+					db.cursor.moveToPosition(position);
+					FireStation station = new FireStation(db.cursor);
+					Intent intent = new Intent( FireStationsActivity.this, FireStationMapActivity.class );
+					intent.putExtra(FireStationMapActivity.DATA_KEY, station);
+					startActivity(intent);
+				}
+			});
+		}
 		
 		return c.getCount();
 	}

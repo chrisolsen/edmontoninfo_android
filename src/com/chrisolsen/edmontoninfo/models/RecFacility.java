@@ -3,7 +3,6 @@ package com.chrisolsen.edmontoninfo.models;
 import java.io.Serializable;
 
 import com.chrisolsen.edmontoninfo.db.RecFacilityDB;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 
@@ -45,5 +44,16 @@ public class RecFacility extends BaseModel implements Serializable {
 		
 		return vals;
 	}
+	
+	public static RecFacility[] convertToArray( Cursor c) {
+		RecFacility[] facs = new RecFacility[c.getCount()];
+		int index = 0;
 
+		while ( c.moveToNext() ) {
+			facs[index] = new RecFacility(c);
+			index++;
+		}
+		
+		return facs;
+	}
 }

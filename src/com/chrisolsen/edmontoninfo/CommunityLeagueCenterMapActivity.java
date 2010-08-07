@@ -1,5 +1,9 @@
 package com.chrisolsen.edmontoninfo;
 
+import static com.chrisolsen.edmontoninfo.maps.MapHelper.*;
+import static com.chrisolsen.edmontoninfo.Global.*;
+
+import com.chrisolsen.edmontoninfo.db.CommunityLeagueCentersDB;
 import com.chrisolsen.edmontoninfo.maps.IMapDelegate;
 import com.chrisolsen.edmontoninfo.maps.MapContextActivity;
 import com.chrisolsen.edmontoninfo.maps.MapContextValues;
@@ -16,9 +20,9 @@ import android.os.Bundle;
 
 public class CommunityLeagueCenterMapActivity extends MapActivity implements IMapDelegate {
 
+	public static final String TAG = "Community League Center Map Activity";
 	public static final String DATA_KEY = "datakey";
 	
-	private CommunityLeagueCenter center;
 	private MapItemizedOverlay markerOverlays;
 	
 	@Override
@@ -26,22 +30,42 @@ public class CommunityLeagueCenterMapActivity extends MapActivity implements IMa
 		super.onCreate(icicle);
 		setContentView( R.layout.google_map );
 		
-		center = (CommunityLeagueCenter)getIntent().getSerializableExtra(DATA_KEY);
-		setTitle(center.name);
-
-		// add marker
-		Drawable marker = getResources().getDrawable( R.drawable.marker );
-		GeoPoint geoPoint = new GeoPoint( (int)(center.latitude*1E6), (int)(center.longitude*1E6) );
-		OverlayItem item = new OverlayItem(geoPoint, center.name, center.address);
-		
-		markerOverlays = new MapItemizedOverlay(marker, this);
-		markerOverlays.addOverlay( item, center );
+		int zoom;
+		GeoPoint focus;
+		CommunityLeagueCenter[] centers;
+		CommunityLeagueCentersDB db = new CommunityLeagueCentersDB(this);
 		
 		MapView mapView = (MapView)findViewById( R.id.mapview );
+		CommunityLeagueCenter center = (CommunityLeagueCenter)getIntent().getSerializableExtra(DATA_KEY);
+		
+		if ( center != null ) {
+			centers = new CommunityLeagueCenter[] { center };
+			setTitle(center.name);
+			focus = convertToGeoPoint(center.latitude, center.longitude);
+			zoom = 17;
+		}
+		else {
+			centers = CommunityLeagueCenter.convertToArray( db.findAll() );
+			db.close();
+			focus = EDMONTON_CENTER;
+			zoom = 11;
+		}
+		
+		// add markers
+		Drawable marker = getResources().getDrawable( R.drawable.marker );
+		markerOverlays = new MapItemizedOverlay(marker, this);
+		
+		for ( CommunityLeagueCenter c: centers ) {
+			GeoPoint geoPoint = convertToGeoPoint(c.latitude, c.longitude);
+			OverlayItem item = new OverlayItem(geoPoint, c.name, c.address);
+			markerOverlays.addOverlay( item, c );
+		}
+		
 		mapView.getOverlays().add(markerOverlays);
-		mapView.setBuiltInZoomControls(true);		
-		mapView.getController().animateTo( geoPoint );
-		mapView.getController().setZoom( 17 );
+		mapView.setBuiltInZoomControls(true);
+		mapView.getController().setZoom( zoom );
+		mapView.getController().animateTo( focus );
+
 	}
 
 	@Override

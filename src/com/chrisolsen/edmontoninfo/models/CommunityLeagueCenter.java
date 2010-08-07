@@ -3,7 +3,6 @@ package com.chrisolsen.edmontoninfo.models;
 import java.io.Serializable;
 
 import com.chrisolsen.edmontoninfo.db.CommunityLeagueCentersDB;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 

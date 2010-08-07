@@ -15,7 +15,11 @@
     <!-- List View -->
     <color name="listview_row_color_light">#ffff</color>
     <color name="listview_row_color_dark">#feee</color>
-    <color name="listview_row_color_border">#f999</color> 
+    <color name="listview_row_color_border">#f999</color>
+    
+    <!-- List View Header Button -->
+    <color name="header_button_color_light">#ffff</color>
+    <color name="header_button_color_dark">#feee</color> 
     
     <!-- TextField -->
     <color name="textfield_color_light">#FFFFFFFF</color> 

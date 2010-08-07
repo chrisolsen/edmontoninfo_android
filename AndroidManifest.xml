@@ -22,19 +22,27 @@
         </activity>
         
         <activity android:name=".SchoolsActivity" android:label="Schools"></activity>
-        <activity android:name=".SchoolMapActivity" />
+        <activity android:name=".SchoolMapActivity" android:label="Schools" />
+        
         <activity android:name=".PoliceStationsActivity" android:label="Police Stations" />
-        <activity android:name=".PoliceStationMapActivity" />
+        <activity android:name=".PoliceStationMapActivity" android:label="Police Stations" />
+        
         <activity android:name=".FireStationsActivity" android:label="Fire Stations" />
-        <activity android:name=".FireStationMapActivity" />
+        <activity android:name=".FireStationMapActivity" android:label="Fire Stations" />
+        
         <activity android:name=".CommunityLeagueCentersActivity" android:label="Community League Centres" />
-        <activity android:name=".CommunityLeagueCenterMapActivity" />
+        <activity android:name=".CommunityLeagueCenterMapActivity" android:label="Community League Centres" />
+        
         <activity android:name=".LibrariesActivity" android:label="Libraries" />
-        <activity android:name=".LibraryMapActivity" />
+        <activity android:name=".LibraryMapActivity" android:label="Libraries" />
+        
         <activity android:name=".ParksActivity" android:label="Parks" />
-        <activity android:name=".ParkMapActivity" />
+        <activity android:name=".ParkMapActivity" android:label="Parks" />
+        
         <activity android:name=".RecFacilitiesActivity" android:label="Rec Facilities" />
-        <activity android:name=".RecFacilityMapActivity" />
+        <activity android:name=".RecFacilityMapActivity" android:label="Rec Facilities" />
+        
+        <activity android:name=".FieldStatusActivity" android:label="Field Status" />
         
         <activity android:name=".maps.MapContextActivity" android:theme="@android:style/Theme.Dialog" />
         

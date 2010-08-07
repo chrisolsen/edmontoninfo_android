@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class PoliceStationsActivity extends ListActivity {
 
@@ -78,20 +79,38 @@ public class PoliceStationsActivity extends ListActivity {
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.listview_row, c, from, to);
 		
 		ListView listView = getListView();
-		listView.setAdapter(adapter);
 		
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				db.cursor.moveToPosition(position);
-				PoliceStation station = new PoliceStation(db.cursor);
-				
-				Intent i = new Intent(PoliceStationsActivity.this, PoliceStationMapActivity.class);
-				i.putExtra(PoliceStationMapActivity.POLICE_STATION, station);
-				
-				startActivity(i);
-			}
-		});
+		// bind header and footer
+		if (c.getCount() > 0) {
+			View header = getLayoutInflater().inflate(R.layout.listview_header, null);
+			TextView viewMap = (TextView)header.findViewById(R.id.listview_header_text);
+			viewMap.setText( String.format("View Map (%d Stations)", c.getCount()) );
+			
+			viewMap.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(PoliceStationsActivity.this, PoliceStationMapActivity.class);
+					startActivity(intent);
+				}
+			});
+			
+			listView.addHeaderView(header);
+			listView.addFooterView(header);
+			listView.setAdapter(adapter);
+			
+			listView.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+					db.cursor.moveToPosition(position);
+					PoliceStation station = new PoliceStation(db.cursor);
+					
+					Intent i = new Intent(PoliceStationsActivity.this, PoliceStationMapActivity.class);
+					i.putExtra(PoliceStationMapActivity.POLICE_STATION, station);
+					
+					startActivity(i);
+				}
+			});
+		}
 		
 		return c.getCount();
 	}

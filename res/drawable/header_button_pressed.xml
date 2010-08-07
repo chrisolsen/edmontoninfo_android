@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+        
+    <solid android:color="@color/header_button_color_light" />
+    <stroke android:color="@color/list_item_focused_border" android:width="4dip" />
+    <padding android:left="10dip" android:top="10dip" android:right="10dip" android:bottom="10dip" /> 
+</shape>

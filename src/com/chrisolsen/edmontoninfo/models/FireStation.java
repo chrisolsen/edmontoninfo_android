@@ -53,5 +53,4 @@ public class FireStation extends BaseModel implements Serializable {
 		
 		return stations;
 	}
-
 }

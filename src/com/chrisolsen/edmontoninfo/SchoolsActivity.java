@@ -175,7 +175,7 @@ public class SchoolsActivity extends ListActivity {
 			int totalCount = status[1];
 			int progress = (countComplete * 100) / totalCount;
 			
-			importDialog.setMessage( String.format("%d%s Complete", progress, "%") );
+			importDialog.setMessage( String.valueOf(progress) + "% Complete" );
 		}
 		
 		@Override 

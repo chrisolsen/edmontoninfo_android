@@ -96,6 +96,16 @@ public class MainActivity extends Activity {
 				startActivity(i);
 			}
 		});
+    	
+    	// City Events
+    	Button btnCityEvents = (Button)findViewById(R.id.btn_city_events);
+    	btnCityEvents.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(MainActivity.this, CityEventsActivity.class);
+				startActivity(i);
+			}
+		});
     }
     
 }

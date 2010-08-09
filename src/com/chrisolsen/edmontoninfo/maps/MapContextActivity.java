@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MapContextActivity extends Activity {
@@ -39,7 +38,7 @@ public class MapContextActivity extends Activity {
 	}
 	
 	private void bindWebsite() {
-		LinearLayout row = (LinearLayout)findViewById( R.id.map_context_website );
+		View row = findViewById( R.id.map_context_website );
 		if ( values.websiteUrl == null )
 			row.setVisibility(View.GONE);
 		else {
@@ -57,7 +56,7 @@ public class MapContextActivity extends Activity {
 	}
 	
 	private void bindPhone() {
-		LinearLayout row = (LinearLayout)findViewById( R.id.map_context_phone );
+		View row = findViewById( R.id.map_context_phone );
 		if ( values.phoneNumber == null )
 			row.setVisibility(View.GONE);
 		else {
@@ -73,7 +72,7 @@ public class MapContextActivity extends Activity {
 	}
 	
 	private void bindEmail() {
-		LinearLayout row = (LinearLayout)findViewById( R.id.map_context_email );
+		View row = findViewById( R.id.map_context_email );
 		if ( values.emailAddress == null )
 			row.setVisibility(View.GONE);
 		else {
@@ -92,7 +91,7 @@ public class MapContextActivity extends Activity {
 	}
 	
 	private void bindStreetView() {
-		LinearLayout row = (LinearLayout)findViewById( R.id.map_context_streetview );
+		View row = findViewById( R.id.map_context_streetview );
 		if ( values.latitude == 0d || values.longitude == 0d)
 			row.setVisibility(View.GONE);
 		else {

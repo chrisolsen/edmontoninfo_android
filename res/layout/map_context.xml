@@ -18,30 +18,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         
-            <LinearLayout android:id="@+id/map_context_website" style="@style/map_context_row" >
+            <RelativeLayout android:id="@+id/map_context_website" style="@style/map_context_row">
 		        <ImageView android:id="@+id/map_context_monitor" android:src="@drawable/display" style="@style/map_context_image" />
 		        <TextView android:text="Website" style="@style/map_context_label" />          
-		    </LinearLayout>
+		    </RelativeLayout>
 		    
-		    <LinearLayout android:id="@+id/map_context_phone" style="@style/map_context_row" >
+		    <RelativeLayout android:id="@+id/map_context_phone" style="@style/map_context_row" >
 		        <ImageView android:src="@drawable/phone" style="@style/map_context_image" />
 		        <TextView android:text="Phone" style="@style/map_context_label" />          
-		    </LinearLayout>    
+		    </RelativeLayout>    
         </TableRow>
         
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             
-            <LinearLayout android:id="@+id/map_context_email" style="@style/map_context_row" >
+            <RelativeLayout android:id="@+id/map_context_email" style="@style/map_context_row" >
 		        <ImageView android:src="@drawable/envelope" style="@style/map_context_image" />
 		        <TextView android:text="Email" style="@style/map_context_label" />          
-		    </LinearLayout>
+		    </RelativeLayout>
 		    
-		    <LinearLayout android:id="@+id/map_context_streetview" style="@style/map_context_row" >
+		    <RelativeLayout android:id="@+id/map_context_streetview" style="@style/map_context_row" >
 		        <ImageView android:src="@drawable/eye" style="@style/map_context_image" />
 		        <TextView android:text="Street View" style="@style/map_context_label" />          
-		    </LinearLayout>
+		    </RelativeLayout>
             
         </TableRow>
     </TableLayout>  

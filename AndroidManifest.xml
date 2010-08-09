@@ -42,6 +42,8 @@
         <activity android:name=".RecFacilitiesActivity" android:label="Rec Facilities" />
         <activity android:name=".RecFacilityMapActivity" android:label="Rec Facilities" />
         
+        <activity android:name=".CityEventsActivity" android:label="City Events" />
+        
         <activity android:name=".FieldStatusActivity" android:label="Field Status" />
         
         <activity android:name=".maps.MapContextActivity" android:theme="@android:style/Theme.Dialog" />

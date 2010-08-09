@@ -15,6 +15,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.chrisolsen.edmontoninfo.Global.*;
+
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -97,7 +99,7 @@ public class FieldStatusActivity extends ListActivity {
 					JSONObject obj = json.getJSONObject(i);
 					FieldState state = new FieldState();
 					
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss+00:00"); // 2010-08-06T15:00:03+00:00
+					SimpleDateFormat formatter = new SimpleDateFormat(ISO8601);
 					
 					state.field 	= obj.getString("name");
 					state.status 	= obj.getString("state");

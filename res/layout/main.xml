@@ -43,6 +43,11 @@
     <Button android:id="@+id/btn_field_status"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="Field Status" />        
+        android:text="Field Status" />
+        
+    <Button android:id="@+id/btn_city_events"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="City Events" />        
 
 </LinearLayout>

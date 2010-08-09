@@ -11,6 +11,7 @@
     <string name="import_url_parks">http://edmontoninfoapp.com/parks</string>
     <string name="import_url_rec_facilities">http://edmontoninfoapp.com/rec_facilities</string>
     <string name="import_url_field_status">http://edmontoninfoapp.com/fields</string>
+    <string name="import_url_city_events">http://edmontoninfoapp.com/city_events</string>
   
     <!-- Maps -->
     <string name="api_maps_key_dev">0pvcHHN70qz7_Qp94jXiroIb6idPITVBR0i6kbQ</string>

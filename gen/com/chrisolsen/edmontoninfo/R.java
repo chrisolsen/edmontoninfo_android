@@ -14,36 +14,42 @@ public final class R {
         public static final int color_background=0x7f040004;
         public static final int color_foreground=0x7f040002;
         public static final int color_foreground_inverse=0x7f040003;
+        public static final int event_almost_over=0x7f04000f;
+        public static final int event_just_started=0x7f04000e;
+        public static final int event_over=0x7f040010;
+        /**  List View Event Priority 
+         */
+        public static final int event_upcoming=0x7f04000d;
         public static final int header_button_color_dark=0x7f04000c;
         /**  List View Header Button 
          */
         public static final int header_button_color_light=0x7f04000b;
         public static final int label=0x7f040001;
-        public static final int list_item_color_disabled=0x7f040015;
-        public static final int list_item_focused_border=0x7f040016;
-        public static final int list_item_selected_color_dark=0x7f040014;
+        public static final int list_item_color_disabled=0x7f040019;
+        public static final int list_item_focused_border=0x7f04001a;
+        public static final int list_item_selected_color_dark=0x7f040018;
         /**  List Items 
          */
-        public static final int list_item_selected_color_light=0x7f040013;
+        public static final int list_item_selected_color_light=0x7f040017;
         public static final int listview_row_color_border=0x7f04000a;
         public static final int listview_row_color_dark=0x7f040009;
         /**  List View 
          */
         public static final int listview_row_color_light=0x7f040008;
-        public static final int page_header_border_color=0x7f040019;
+        public static final int page_header_border_color=0x7f04001d;
         /**   Page 
          */
-        public static final int page_header_color_dark=0x7f040017;
-        public static final int page_header_color_light=0x7f040018;
+        public static final int page_header_color_dark=0x7f04001b;
+        public static final int page_header_color_light=0x7f04001c;
         public static final int show_header_color=0x7f040000;
-        public static final int textfield_color_dark=0x7f04000e;
-        public static final int textfield_color_disabled=0x7f04000f;
+        public static final int textfield_color_dark=0x7f040012;
+        public static final int textfield_color_disabled=0x7f040013;
         /**  TextField 
          */
-        public static final int textfield_color_light=0x7f04000d;
-        public static final int textfield_default_border=0x7f040010;
-        public static final int textfield_disabled_focused_border=0x7f040012;
-        public static final int textfield_focused_border=0x7f040011;
+        public static final int textfield_color_light=0x7f040011;
+        public static final int textfield_default_border=0x7f040014;
+        public static final int textfield_disabled_focused_border=0x7f040016;
+        public static final int textfield_focused_border=0x7f040015;
         public static final int title_color_border=0x7f040007;
         public static final int title_color_dark=0x7f040006;
         /**  Window Title 
@@ -90,6 +96,7 @@ public final class R {
         public static final int balloon_item_snippet=0x7f070003;
         public static final int balloon_item_title=0x7f070002;
         public static final int balloon_main_layout=0x7f070000;
+        public static final int btn_city_events=0x7f070010;
         public static final int btn_community_league_centers=0x7f07000b;
         public static final int btn_field_status=0x7f07000f;
         public static final int btn_fire_stations=0x7f07000a;
@@ -101,12 +108,12 @@ public final class R {
         public static final int close_img_button=0x7f070004;
         public static final int listview_header_text=0x7f070007;
         public static final int mainlayout=0x7f070005;
-        public static final int map_context_address=0x7f070010;
-        public static final int map_context_email=0x7f070014;
-        public static final int map_context_monitor=0x7f070012;
-        public static final int map_context_phone=0x7f070013;
-        public static final int map_context_streetview=0x7f070015;
-        public static final int map_context_website=0x7f070011;
+        public static final int map_context_address=0x7f070011;
+        public static final int map_context_email=0x7f070015;
+        public static final int map_context_monitor=0x7f070013;
+        public static final int map_context_phone=0x7f070014;
+        public static final int map_context_streetview=0x7f070016;
+        public static final int map_context_website=0x7f070012;
         public static final int mapview=0x7f070006;
     }
     public static final class layout {
@@ -123,10 +130,11 @@ public final class R {
     public static final class string {
         /**  Maps 
          */
-        public static final int api_maps_key_dev=0x7f050009;
-        public static final int api_maps_key_rel=0x7f05000a;
+        public static final int api_maps_key_dev=0x7f05000a;
+        public static final int api_maps_key_rel=0x7f05000b;
         public static final int app_name=0x7f050000;
-        public static final int default_map_zoom=0x7f05000b;
+        public static final int default_map_zoom=0x7f05000c;
+        public static final int import_url_city_events=0x7f050009;
         public static final int import_url_community_league_centers=0x7f050004;
         public static final int import_url_field_status=0x7f050008;
         public static final int import_url_fire_stations=0x7f050003;

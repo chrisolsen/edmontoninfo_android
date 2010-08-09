@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:padding="10dip" android:background="@drawable/list_selector_background">
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	android:background="@drawable/list_selector_background"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:padding="10dip">
 
 	<TextView android:id="@android:id/text1" style="@style/cell_header" />
 

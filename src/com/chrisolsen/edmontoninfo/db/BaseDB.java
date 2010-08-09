@@ -33,6 +33,7 @@ public abstract class BaseDB extends SQLiteOpenHelper {
 		db.execSQL( LibraryDB.TABLE_CREATE );
 		db.execSQL( ParkDB.TABLE_CREATE );
 		db.execSQL( RecFacilityDB.TABLE_CREATE );
+		db.execSQL( CityEventDB.TABLE_CREATE );
 	}
 
 	@Override

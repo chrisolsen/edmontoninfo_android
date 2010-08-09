@@ -21,6 +21,12 @@
     <color name="header_button_color_light">#ffff</color>
     <color name="header_button_color_dark">#feee</color> 
     
+    <!-- List View Event Priority -->
+    <color name="event_upcoming">#ffff</color>
+    <color name="event_just_started">#30f0</color>
+    <color name="event_almost_over">#3ff0</color>
+    <color name="event_over">#3f00</color>
+    
     <!-- TextField -->
     <color name="textfield_color_light">#FFFFFFFF</color> 
 	<color name="textfield_color_dark">#FFDDDDDD</color> 

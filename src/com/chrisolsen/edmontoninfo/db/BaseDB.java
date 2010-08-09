@@ -10,13 +10,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public abstract class BaseDB extends SQLiteOpenHelper {
 
-	// Standard Cols	
 	public static final String  DATABASE_NAME = "edmontoninfo.db";
+	public static final String 	ID = "_id";
 	public static final int 	VERSION = 1;
 	
 	public Cursor cursor;
 	
-	// Abstract methods
 	protected abstract String getTableName();
 	protected abstract String getColumnHackName();
 	
@@ -68,7 +67,7 @@ public abstract class BaseDB extends SQLiteOpenHelper {
 	}
 	
 	public Cursor findById(long id) {
-		return findBy( "_id", Long.toString(id) );
+		return findBy( ID, Long.toString(id) );
 	}
 	
 	// CRUD
@@ -78,9 +77,9 @@ public abstract class BaseDB extends SQLiteOpenHelper {
 		
 		long id = model.id;
 		if ( id != 0 )
-			db.update(getTableName(), vals, "_id = " + Long.toString(id), null);
+			db.update(getTableName(), vals, ID + " = " + Long.toString(id), null);
 		else {
-			vals.remove("_id");
+			vals.remove(ID);
 			id = db.insert(getTableName(), getColumnHackName(), vals);
 		}
 		
@@ -89,7 +88,7 @@ public abstract class BaseDB extends SQLiteOpenHelper {
 	
 	public boolean delete(BaseModel model) {
 		SQLiteDatabase db = getWritableDatabase();
-		db.delete(getTableName(), "_id = " + Long.toString(model.id), null);
+		db.delete(getTableName(), ID + " = " + Long.toString(model.id), null);
 		
 		return false;
 	}

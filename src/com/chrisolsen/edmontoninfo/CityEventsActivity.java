@@ -25,7 +25,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
 public class CityEventsActivity extends ListActivity {
@@ -39,21 +41,39 @@ public class CityEventsActivity extends ListActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		CityEventDB db = new CityEventDB(this);
 		cityEvents = db.getList(CNAME_NAME);
 		
 		if ( cityEvents.size() == 0 )
 			showDialog(DIALOG_IMPORT_ID);
-		else
+		else {
 			bindData( cityEvents );
+			syncData();
+		}
 	}
 	
+	/**
+	 * Bind data to listview
+	 * @param events
+	 */
 	private void bindData(ArrayList<CityEvent> events) {
 		Collections.sort(events);
 		EventAdapter adapter = new EventAdapter(this, events);
 		setListAdapter(adapter);
 	}
+	
+	/**
+	 * Gets the most recently posted events
+	 */
+	private void syncData() {
+		
+	}
 
+	/**
+	 * Show data import progress
+	 */
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		
@@ -71,7 +91,33 @@ public class CityEventsActivity extends ListActivity {
 		
 		return super.onCreateDialog(id);
 	}
+	
+	private class SyncCityEvents extends AsyncTask<Void, Void, Void> {
 
+		@Override
+		protected Void doInBackground(Void... params) {
+			
+			return null;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			setProgressBarIndeterminateVisibility(true);
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			CityEventDB db = new CityEventDB(CityEventsActivity.this);
+			cityEvents = db.getList(CityEventDB.CNAME_STARTS_AT);
+
+			bindData( cityEvents );
+			setProgressBarIndeterminateVisibility(false);
+		}
+	}
+
+	/**
+	 * Background thread to import events
+	 */
 	private class ImportCityEvents extends AsyncTask<Void, Integer, Void> {
 
 		@Override
@@ -124,6 +170,10 @@ public class CityEventsActivity extends ListActivity {
 		}		
 	}
 	
+	/**
+	 * Adapter to allow formatting of event start and end dates and
+	 * color coding based on the event priority
+	 */
 	private class EventAdapter extends ArrayAdapter<CityEvent>  {
 
 		private List<CityEvent> cityEvents;
@@ -155,6 +205,7 @@ public class CityEventsActivity extends ListActivity {
 				wrapper = (EventWrapper)row.getTag();
 			}
 			
+			// event priority colors
 			int colorId = 0;
 			switch (event.getStatus()) {
 			case EVENT_ALMOST_OVER:
@@ -181,6 +232,9 @@ public class CityEventsActivity extends ListActivity {
 		}
 	}
 	
+	/**
+	 * Wrapper to save the finding of views
+	 */
 	private class EventWrapper {
 		TextView header;
 		TextView details;

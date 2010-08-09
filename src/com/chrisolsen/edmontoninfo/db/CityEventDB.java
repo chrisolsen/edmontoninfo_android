@@ -66,11 +66,10 @@ public class CityEventDB extends BaseDB {
 		ArrayList<CityEvent> list = new ArrayList<CityEvent>();
 		SimpleDateFormat formatter = new SimpleDateFormat(ISO8601);
 		
-		c.moveToFirst();
-		do {
+		while(c.moveToNext()) {
 			try {
 				CityEvent e = new CityEvent();
-				e.id 		= c.getInt(CINDEX_ID);
+				e.id 		= c.getLong(CINDEX_ID);
 				e.gid 		= c.getInt(CINDEX_GID);
 				e.name 		= c.getString(CINDEX_NAME);
 				e.note 		= c.getString(CINDEX_NOTE);
@@ -84,7 +83,7 @@ public class CityEventDB extends BaseDB {
 				// do nothing -> bad data
 				e1.printStackTrace();
 			}
-		} while (c.moveToNext());
+		}
 		
 		close();
 		

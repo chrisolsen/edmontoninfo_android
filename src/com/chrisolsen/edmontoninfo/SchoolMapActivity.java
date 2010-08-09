@@ -39,7 +39,7 @@ public class SchoolMapActivity extends MapActivity implements IMapDelegate {
 		}
 		else {
 			SchoolsDB db = new SchoolsDB(this);
-			schools = School.convertToArray( db.findAll() );
+			schools = School.convertToArray( db.getCursor(null, null) );
 			db.close();
 			mapCenter = EDMONTON_CENTER;
 			zoom = 11;

@@ -44,30 +44,14 @@ public abstract class BaseDB extends SQLiteOpenHelper {
 	}
 		
 	// Lookups
-	public Cursor findAll() {
-		return findAll(null);
-	}
-	
-	public Cursor findAll(String orderBy) {
+	public Cursor getCursor(String where, String orderBy) {
 		SQLiteDatabase db = getWritableDatabase();
-		this.cursor = db.query(getTableName(), null, null, null, null, null, orderBy);
+		this.cursor = db.query(getTableName(), null, where, null, null, null, orderBy);
 		return this.cursor;
 	}
-	
-	public Cursor findBy(String column, String value) {
-		SQLiteDatabase db = getWritableDatabase();
-		this.cursor = db.query(getTableName(), 
-							null, 
-							column + " = " + value, 
-							null, null, null, null);
 
-		if ( this.cursor.moveToFirst() )
-			return this.cursor;
-		return null;
-	}
-	
-	public Cursor findById(long id) {
-		return findBy( ID, Long.toString(id) );
+	public Cursor getCursor(long id) {
+		return getCursor( ID + "" + Long.toString(id) , null);
 	}
 	
 	// CRUD

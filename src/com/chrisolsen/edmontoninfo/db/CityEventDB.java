@@ -31,6 +31,8 @@ public class CityEventDB extends BaseDB {
 	public static final String CNAME_NOTE 		= "note";
 	public static final String CNAME_STARTS_AT 	= "starts_at";
 	public static final String CNAME_ENDS_AT 	= "ends_at";
+	public static final String CNAME_CREATED_AT = "created_at";
+	public static final String CNAME_UPDATED_AT = "updated_at";
 	
 	public static final int CINDEX_ID 			= 0;
 	public static final int CINDEX_GID 			= 1;
@@ -39,16 +41,21 @@ public class CityEventDB extends BaseDB {
 	public static final int CINDEX_NOTE 		= 4;
 	public static final int CINDEX_STARTS_AT 	= 5;
 	public static final int CINDEX_ENDS_AT 		= 6;
+	public static final int CINDEX_CREATED_AT 	= 7;
+	public static final int CINDEX_UPDATED_AT 	= 8;
+	
 	
 	public static final String TABLE_CREATE = "create table " +
-		TABLE_NAME 		+ " (" +
-		CNAME_ID 		+ " integer primary key, " +
-		CNAME_GID 		+ " integer, " +
-		CNAME_NAME 		+ " text, " +
-		CNAME_LOCATION 	+ " text, " +
-		CNAME_NOTE 		+ " text, " +
-		CNAME_STARTS_AT + " numeric, " +
-		CNAME_ENDS_AT 	+ " numeric )";
+		TABLE_NAME 			+ " (" +
+		CNAME_ID 			+ " integer primary key, " +
+		CNAME_GID 			+ " integer, " +
+		CNAME_NAME 			+ " text, " +
+		CNAME_LOCATION 		+ " text, " +
+		CNAME_NOTE 			+ " text, " +
+		CNAME_STARTS_AT 	+ " numeric, " +
+		CNAME_ENDS_AT   	+ " numeric, " +
+		CNAME_CREATED_AT 	+ " numeric, " +
+		CNAME_UPDATED_AT 	+ " numeric )";
 	
 	@Override
 	protected String getTableName() {
@@ -60,9 +67,9 @@ public class CityEventDB extends BaseDB {
 		return HACK_COLUMN;
 	}
 	
-	public ArrayList<CityEvent> getList(String orderBy) {
+	public ArrayList<CityEvent> getList(String where, String orderBy) {
 		
-		Cursor c = this.findAll(orderBy);
+		Cursor c = this.getCursor(where, orderBy);
 		ArrayList<CityEvent> list = new ArrayList<CityEvent>();
 		SimpleDateFormat formatter = new SimpleDateFormat(ISO8601);
 		
@@ -76,6 +83,8 @@ public class CityEventDB extends BaseDB {
 				e.location 	= c.getString(CINDEX_LOCATION);
 				e.startsAt 	= formatter.parse( c.getString(CINDEX_STARTS_AT) );
 				e.endsAt 	= formatter.parse( c.getString(CINDEX_ENDS_AT) );
+				e.createdAt = formatter.parse( c.getString(CINDEX_CREATED_AT) );
+				e.updatedAt = formatter.parse( c.getString(CINDEX_UPDATED_AT) );
 				
 				list.add(e);
 				
@@ -110,6 +119,8 @@ public class CityEventDB extends BaseDB {
 					e.location 	= obj.getString(CNAME_LOCATION);
 					e.startsAt 	= formatter.parse( obj.getString(CNAME_STARTS_AT) );
 					e.endsAt 	= formatter.parse( obj.getString(CNAME_ENDS_AT) );
+					e.createdAt = formatter.parse( obj.getString(CNAME_CREATED_AT) );
+					e.updatedAt = formatter.parse( obj.getString(CNAME_UPDATED_AT) );
 					
 					// fixes
 					if (e.note == "null") e.note = "";

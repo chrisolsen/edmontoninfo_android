@@ -85,7 +85,7 @@ public class LibrariesActivity extends ListActivity {
 	private void bindData() {
 		if ( _db == null )
 			_db = new LibraryDB(this);
-		Cursor c = _db.findAll( LibraryDB.CNAME_BRANCH );
+		Cursor c = _db.getCursor( null, LibraryDB.CNAME_BRANCH );
 		
 		SimpleCursorAdapter ca = new SimpleCursorAdapter(LibrariesActivity.this, 
 															R.layout.listview_row, 
@@ -131,7 +131,7 @@ public class LibrariesActivity extends ListActivity {
 			LibraryDB db = new LibraryDB(LibrariesActivity.this);
 			
 			// list of existing school names
-			Cursor c = db.findAll();
+			Cursor c = db.getCursor(null, null);
 			ArrayList<String> names = new ArrayList<String>( c.getCount() );
 			while ( c.moveToNext() ) {
 				names.add( c.getString(LibraryDB.CINDEX_BRANCH) );

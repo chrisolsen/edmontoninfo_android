@@ -73,7 +73,7 @@ public class CommunityLeagueCentersActivity extends ListActivity {
 	 */
 	private int bindItems() {
 		this.db = new CommunityLeagueCentersDB(this);
-		Cursor c = db.findAll(CommunityLeagueCentersDB.CNAME_NAME);
+		Cursor c = db.getCursor(null, CommunityLeagueCentersDB.CNAME_NAME);
 		String[] from = new String[] { CommunityLeagueCentersDB.CNAME_NAME, CommunityLeagueCentersDB.CNAME_ADDRESS };
 		int[] to = new int[] { android.R.id.text1, android.R.id.text2 };
 		

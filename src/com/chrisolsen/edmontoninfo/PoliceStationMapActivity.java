@@ -40,7 +40,7 @@ public class PoliceStationMapActivity extends MapActivity implements IMapDelegat
 		}
 		else {
 			PoliceStationsDB db = new PoliceStationsDB(this);
-			stations = PoliceStation.convertToArray( db.findAll() );
+			stations = PoliceStation.convertToArray( db.getCursor(null, null) );
 			db.close();
 			mapCenter = EDMONTON_CENTER;
 			zoom = 11;

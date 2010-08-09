@@ -38,7 +38,7 @@ public class ParkMapActivity extends MapActivity implements IMapDelegate {
 		}
 		else {
 			ParkDB db = new ParkDB(this);
-			parks = Park.convertToArray( db.findAll() );
+			parks = Park.convertToArray( db.getCursor(null, null) );
 			db.close();
 			mapCenter = EDMONTON_CENTER;
 			zoom = 11;

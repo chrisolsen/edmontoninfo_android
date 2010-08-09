@@ -42,7 +42,7 @@ public class RecFacilityMapActivity extends MapActivity implements IMapDelegate 
 		}
 		else {
 			RecFacilityDB db = new RecFacilityDB(this);
-			facs = RecFacility.convertToArray( db.findAll() );
+			facs = RecFacility.convertToArray( db.getCursor(null, null) );
 			db.close();
 			mapCenter = EDMONTON_CENTER;
 			zoom = 11;

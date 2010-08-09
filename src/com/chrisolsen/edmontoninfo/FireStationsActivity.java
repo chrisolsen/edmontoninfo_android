@@ -71,7 +71,7 @@ private static final int DIALOG_IMPORT_DATA = 0;
 	 */
 	private int bindStations() {
 		this.db = new FireStationsDB(this);
-		Cursor c = db.findAll(FireStationsDB.CNAME_NAME);
+		Cursor c = db.getCursor(null, FireStationsDB.CNAME_NAME);
 		String[] from = new String[] { FireStationsDB.CNAME_NAME, FireStationsDB.CNAME_ADDRESS };
 		int[] to = new int[] { android.R.id.text1, android.R.id.text2 };
 		

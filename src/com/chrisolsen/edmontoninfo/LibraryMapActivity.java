@@ -38,7 +38,7 @@ public class LibraryMapActivity extends MapActivity implements IMapDelegate {
 		}
 		else {
 			LibraryDB db = new LibraryDB(this);
-			libraries = Library.convertToArray( db.findAll() );
+			libraries = Library.convertToArray( db.getCursor(null, null) );
 			db.close();
 			mapCenter = EDMONTON_CENTER;
 			zoom = 11;

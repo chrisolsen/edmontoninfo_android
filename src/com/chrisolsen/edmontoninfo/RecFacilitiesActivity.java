@@ -83,7 +83,7 @@ public class RecFacilitiesActivity extends ListActivity {
 	private void bindData() {
 		if ( _db == null )
 			_db = new RecFacilityDB(this);
-		Cursor c = _db.findAll( RecFacilityDB.CNAME_NAME );
+		Cursor c = _db.getCursor( null, RecFacilityDB.CNAME_NAME );
 		
 		SimpleCursorAdapter ca = new SimpleCursorAdapter(RecFacilitiesActivity.this, 
 															R.layout.listview_row, 
@@ -129,7 +129,7 @@ public class RecFacilitiesActivity extends ListActivity {
 			RecFacilityDB db = new RecFacilityDB(RecFacilitiesActivity.this);
 			
 			// list of existing school names
-			Cursor c = db.findAll();
+			Cursor c = db.getCursor(null, null);
 			ArrayList<String> names = new ArrayList<String>( c.getCount() );
 			while ( c.moveToNext() ) {
 				names.add( c.getString(RecFacilityDB.CINDEX_ENTITY_ID) );

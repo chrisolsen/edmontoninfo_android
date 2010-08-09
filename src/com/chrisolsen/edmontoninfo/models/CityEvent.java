@@ -21,6 +21,8 @@ public class CityEvent extends BaseModel implements Comparable<CityEvent> {
 	public String location;
 	public Date startsAt;
 	public Date	endsAt;
+	public Date	createdAt;
+	public Date	updatedAt;
 	
 	public CityEvent() {}
 	
@@ -64,6 +66,8 @@ public class CityEvent extends BaseModel implements Comparable<CityEvent> {
 		vals.put(CNAME_LOCATION, location);
 		vals.put(CNAME_STARTS_AT, formatter.format(startsAt));
 		vals.put(CNAME_ENDS_AT, formatter.format(endsAt));
+		vals.put(CNAME_CREATED_AT, formatter.format(createdAt));
+		vals.put(CNAME_UPDATED_AT, formatter.format(updatedAt));
 		
 		return vals;
 	}

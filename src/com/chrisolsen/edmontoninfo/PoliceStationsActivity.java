@@ -72,7 +72,7 @@ public class PoliceStationsActivity extends ListActivity {
 	 */
 	private int bindStations() {
 		this.db = new PoliceStationsDB(this);
-		Cursor c = db.findAll(PoliceStationsDB.CNAME_NAME);
+		Cursor c = db.getCursor(null, PoliceStationsDB.CNAME_NAME);
 		String[] from = new String[] { PoliceStationsDB.CNAME_NAME, PoliceStationsDB.CNAME_ADDRESS };
 		int[] to = new int[] { android.R.id.text1, android.R.id.text2 };
 		

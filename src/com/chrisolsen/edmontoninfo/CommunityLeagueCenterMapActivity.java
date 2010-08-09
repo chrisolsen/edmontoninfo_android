@@ -45,7 +45,7 @@ public class CommunityLeagueCenterMapActivity extends MapActivity implements IMa
 			zoom = 17;
 		}
 		else {
-			centers = CommunityLeagueCenter.convertToArray( db.findAll() );
+			centers = CommunityLeagueCenter.convertToArray( db.getCursor(null, null) );
 			db.close();
 			focus = EDMONTON_CENTER;
 			zoom = 11;

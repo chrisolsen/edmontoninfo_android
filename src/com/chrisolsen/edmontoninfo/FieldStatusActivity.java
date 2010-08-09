@@ -49,6 +49,7 @@ public class FieldStatusActivity extends ListActivity {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("E MMM d '@' hh:mm a");
 		String formattedDate = formatter.format(fieldStates.get(0).updatedAt);
+		
 		headerText.setText(formattedDate);
 		getListView().setClickable(false);
 		getListView().addHeaderView(header);

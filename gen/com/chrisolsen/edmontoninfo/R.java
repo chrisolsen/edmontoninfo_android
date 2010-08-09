@@ -130,11 +130,12 @@ public final class R {
     public static final class string {
         /**  Maps 
          */
-        public static final int api_maps_key_dev=0x7f05000a;
-        public static final int api_maps_key_rel=0x7f05000b;
+        public static final int api_maps_key_dev=0x7f05000b;
+        public static final int api_maps_key_rel=0x7f05000c;
         public static final int app_name=0x7f050000;
-        public static final int default_map_zoom=0x7f05000c;
+        public static final int default_map_zoom=0x7f05000d;
         public static final int import_url_city_events=0x7f050009;
+        public static final int import_url_city_events_sync=0x7f05000a;
         public static final int import_url_community_league_centers=0x7f050004;
         public static final int import_url_field_status=0x7f050008;
         public static final int import_url_fire_stations=0x7f050003;

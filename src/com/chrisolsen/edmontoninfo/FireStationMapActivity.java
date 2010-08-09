@@ -39,7 +39,7 @@ public class FireStationMapActivity extends MapActivity implements IMapDelegate 
 		}
 		else {
 			FireStationsDB db = new FireStationsDB(this);
-			stations = FireStation.convertToArray( db.findAll() );
+			stations = FireStation.convertToArray( db.getCursor(null, null) );
 			db.close();
 			mapCenter = EDMONTON_CENTER;
 			zoom = 11;

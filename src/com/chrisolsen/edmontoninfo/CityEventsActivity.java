@@ -1,10 +1,13 @@
 package com.chrisolsen.edmontoninfo;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.chrisolsen.edmontoninfo.Global.*;
 import static com.chrisolsen.edmontoninfo.db.CityEventDB.*;
 import static com.chrisolsen.edmontoninfo.models.CityEvent.*;
 
@@ -21,18 +24,23 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
-import android.widget.SlidingDrawer;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class CityEventsActivity extends ListActivity {
 
 	private static final int DIALOG_IMPORT_ID = 0;
+	private static final String PREFS = "cityeventprefs";
+	private static final String LAST_SYNC_DATE = "last_city_event_sync_date";
+	
 	protected ProgressDialog dialog;
 	
 	private ArrayList<CityEvent> cityEvents;
@@ -44,7 +52,7 @@ public class CityEventsActivity extends ListActivity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
 		CityEventDB db = new CityEventDB(this);
-		cityEvents = db.getList(CNAME_NAME);
+		cityEvents = db.getList(null, CNAME_NAME);
 		
 		if ( cityEvents.size() == 0 )
 			showDialog(DIALOG_IMPORT_ID);
@@ -68,6 +76,14 @@ public class CityEventsActivity extends ListActivity {
 	 * Gets the most recently posted events
 	 */
 	private void syncData() {
+		SyncCityEvents sync = new SyncCityEvents();
+		try {
+			Thread.sleep(3000);
+			sync.execute( (Void[])null );
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -94,8 +110,48 @@ public class CityEventsActivity extends ListActivity {
 	
 	private class SyncCityEvents extends AsyncTask<Void, Void, Void> {
 
+		private String lastSyncTimeStamp;
+		
 		@Override
 		protected Void doInBackground(Void... params) {
+			
+			SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+			lastSyncTimeStamp = prefs.getString(LAST_SYNC_DATE, "");
+			
+			final String url = getString(R.string.import_url_city_events_sync) + "/" + lastSyncTimeStamp; 
+			HttpGet getter = new HttpGet(url);
+			HttpClient client = new DefaultHttpClient();
+			ResponseHandler<String> handler = new BasicResponseHandler();
+			
+			CityEventDB db = new CityEventDB(CityEventsActivity.this);
+			
+			try {
+				String json = client.execute(getter, handler);
+				ArrayList<CityEvent> events = db.convertFromJson(json);
+				
+				for (CityEvent e: events) {
+					db.save(e);
+				}
+				
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			finally {
+				db.close();
+			}
+			
+			// save new timestamp
+			SharedPreferences.Editor prefsEditor = getSharedPreferences(PREFS, MODE_PRIVATE).edit();
+			SimpleDateFormat formatter = new SimpleDateFormat(ISO8601);
+			String updatedTimestamp = formatter.format(new Date());
+			
+			Date d;
+	
+			
+			prefsEditor.putString(LAST_SYNC_DATE, updatedTimestamp);
+			prefsEditor.commit();
 			
 			return null;
 		}
@@ -108,9 +164,12 @@ public class CityEventsActivity extends ListActivity {
 		@Override
 		protected void onPostExecute(Void result) {
 			CityEventDB db = new CityEventDB(CityEventsActivity.this);
-			cityEvents = db.getList(CityEventDB.CNAME_STARTS_AT);
-
-			bindData( cityEvents );
+			String filter = CNAME_UPDATED_AT + "> '" + lastSyncTimeStamp + "'";
+			ArrayList<CityEvent> newEvents = db.getList(filter, CityEventDB.CNAME_STARTS_AT);
+			
+			cityEvents.addAll(0, newEvents);
+			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+			
 			setProgressBarIndeterminateVisibility(false);
 		}
 	}
@@ -164,9 +223,17 @@ public class CityEventsActivity extends ListActivity {
 			dismissDialog(DIALOG_IMPORT_ID);
 			
 			CityEventDB db = new CityEventDB(CityEventsActivity.this);
-			cityEvents = db.getList(CityEventDB.CNAME_STARTS_AT);
+			cityEvents = db.getList(null, CityEventDB.CNAME_STARTS_AT);
 
 			bindData( cityEvents );
+			
+			// save timestamp to allow for later syncing of new events			
+			SharedPreferences.Editor prefs = getSharedPreferences(PREFS, MODE_PRIVATE).edit();
+			SimpleDateFormat formatter = new SimpleDateFormat(ISO8601);
+			String stamp = formatter.format(new Date());
+			
+			prefs.putString( LAST_SYNC_DATE, stamp );
+			prefs.commit();
 		}		
 	}
 	

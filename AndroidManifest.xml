@@ -32,7 +32,7 @@
         
         <activity android:name=".CommunityLeagueCentersActivity" android:label="Community League Centres" />
         <activity android:name=".CommunityLeagueCenterMapActivity" android:label="Community League Centres" />
-        
+
         <activity android:name=".LibrariesActivity" android:label="Libraries" />
         <activity android:name=".LibraryMapActivity" android:label="Libraries" />
         
@@ -43,6 +43,7 @@
         <activity android:name=".RecFacilityMapActivity" android:label="Rec Facilities" />
         
         <activity android:name=".CityEventsActivity" android:label="City Events" />
+        <activity android:name=".CityEventActivity" android:label="City Event Details" android:theme="@android:style/Theme.Dialog" />
         
         <activity android:name=".FieldStatusActivity" android:label="Field Status" />
         

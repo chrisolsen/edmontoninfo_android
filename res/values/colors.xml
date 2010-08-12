@@ -8,8 +8,8 @@
     <color name="color_background">#fff</color>
     
     <!-- Window Title -->
-    <color name="title_color_light">#FF19447c</color>
-    <color name="title_color_dark">#FF044272</color>
+    <color name="title_color_light">#FF2b75c2</color>
+    <color name="title_color_dark">#FF1e5288</color>
     <color name="title_color_border">#FF282828</color>
     
     <!-- List View -->
@@ -22,7 +22,7 @@
     <color name="header_button_color_dark">#feee</color> 
     
     <!-- List View Event Priority -->
-    <color name="event_upcoming">#ffff</color>
+    <color name="event_upcoming">#3fff</color>
     <color name="event_just_started">#30f0</color>
     <color name="event_almost_over">#3ff0</color>
     <color name="event_over">#3f00</color>

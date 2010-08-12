@@ -1,5 +1,6 @@
 package com.chrisolsen.edmontoninfo.models;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -8,8 +9,10 @@ import static com.chrisolsen.edmontoninfo.Global.*;
 
 import android.content.ContentValues;
 
-public class CityEvent extends BaseModel implements Comparable<CityEvent> {
+public class CityEvent extends BaseModel implements Comparable<CityEvent>, Serializable {
 
+	private static final long serialVersionUID = 6495208538031722850L;
+	
 	public static final int EVENT_ALMOST_OVER 	= 0;
 	public static final int EVENT_JUST_STARTED 	= 1;
 	public static final int EVENT_UPCOMING 		= 2;
@@ -24,10 +27,18 @@ public class CityEvent extends BaseModel implements Comparable<CityEvent> {
 	public Date	createdAt;
 	public Date	updatedAt;
 	
+	private SimpleDateFormat _humanizedDateTimeFormatter;
+	
 	public CityEvent() {}
 	
+	private SimpleDateFormat getHumanizedDateTimeFormatter() {
+		if ( _humanizedDateTimeFormatter == null)
+			_humanizedDateTimeFormatter =  new SimpleDateFormat("EEEE MMM d hh:ss");
+		return _humanizedDateTimeFormatter;
+	}
+	
 	public String getHappensAt() {
-		SimpleDateFormat formatter = new SimpleDateFormat("EEEE MMM d");
+		SimpleDateFormat formatter = new SimpleDateFormat("EEEE MMM d a");
 		String start = formatter.format(startsAt);
 		String end = formatter.format(endsAt);
 		
@@ -35,6 +46,14 @@ public class CityEvent extends BaseModel implements Comparable<CityEvent> {
 			return start;
 		else
 			return start + " - " + end;
+	}
+	
+	public String getHumanizedStartsAt() {
+		return getHumanizedDateTimeFormatter().format(this.startsAt);
+	}
+	
+	public String getHumanizedEndsAt() {
+		return getHumanizedDateTimeFormatter().format(this.endsAt);
 	}
 	
 	public int getStatus() {

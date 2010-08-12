@@ -12,23 +12,28 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class TableAdapter extends ArrayAdapter<TableAdapter.NameValue> {
+public class TableAdapter extends ArrayAdapter<NameValue> {
 
-	LayoutInflater inflater;
-	List<TableAdapter.NameValue> nameValues;
+	private LayoutInflater inflater;
+	private List<NameValue> nameValues;
+	private RowLayout rowLayout;
 	
-	public TableAdapter(Context context, List<TableAdapter.NameValue> nameValues) {
+	public static enum RowLayout {VERTICAL, HORIZONTAL};
+	
+	public TableAdapter(Context context, RowLayout rowLayout, List<NameValue> nameValues) {
 		super(context, R.layout.table_row, nameValues);
 		this.nameValues = nameValues;
 		this.inflater = (LayoutInflater)context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
+		this.rowLayout = rowLayout;
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
 		View row = convertView;
-		
+		int layout = rowLayout == RowLayout.HORIZONTAL ? R.layout.table_row : R.layout.table_stacked;
+
 		if (convertView == null)
-			row = inflater.inflate(R.layout.table_row, null);
+			row = inflater.inflate(layout, null);
 		
 		TextView label = (TextView)row.findViewById( android.R.id.text1 );
 		TextView value = (TextView)row.findViewById( android.R.id.text2 );
@@ -38,15 +43,5 @@ public class TableAdapter extends ArrayAdapter<TableAdapter.NameValue> {
 		value.setText( item.value );
 		
 		return row;
-	}
-
-	public class NameValue {
-		public String name;
-		public String value;
-		
-		public NameValue(String name, String value) {
-			this.name = name;
-			this.value = value;
-		}
 	}
 }

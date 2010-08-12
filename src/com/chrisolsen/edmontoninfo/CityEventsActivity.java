@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 
 import static com.chrisolsen.edmontoninfo.Global.*;
 import static com.chrisolsen.edmontoninfo.db.CityEventDB.*;
@@ -24,15 +25,17 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class CityEventsActivity extends ListActivity {
@@ -77,14 +80,19 @@ public class CityEventsActivity extends ListActivity {
 	 */
 	private void syncData() {
 		SyncCityEvents sync = new SyncCityEvents();
-		try {
-			Thread.sleep(3000);
-			sync.execute( (Void[])null );
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		sync.execute( (Void[])null );
+	}
+	
+	/**
+	 * List item selection
+	 */
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		//super.onListItemClick(l, v, position, id);
+		CityEvent event = this.cityEvents.get(position);
+		Intent intent = new Intent(this, CityEventActivity.class);
+		intent.putExtra(CityEventActivity.DATA_KEY, event);
+		startActivity(intent);
 	}
 
 	/**
@@ -110,26 +118,33 @@ public class CityEventsActivity extends ListActivity {
 	
 	private class SyncCityEvents extends AsyncTask<Void, Void, Void> {
 
-		private String lastSyncTimeStamp;
+		private ArrayList<CityEvent> newEvents;
 		
 		@Override
 		protected Void doInBackground(Void... params) {
 			
 			SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
-			lastSyncTimeStamp = prefs.getString(LAST_SYNC_DATE, "");
+			String lastSyncTimeStamp = prefs.getString(LAST_SYNC_DATE, "");
 			
-			final String url = getString(R.string.import_url_city_events_sync) + "/" + lastSyncTimeStamp; 
+			final String url = getString(R.string.import_url_city_events_sync) + "/" + lastSyncTimeStamp;
+			
 			HttpGet getter = new HttpGet(url);
 			HttpClient client = new DefaultHttpClient();
 			ResponseHandler<String> handler = new BasicResponseHandler();
 			
 			CityEventDB db = new CityEventDB(CityEventsActivity.this);
+			Cursor cursor = null;
 			
 			try {
 				String json = client.execute(getter, handler);
-				ArrayList<CityEvent> events = db.convertFromJson(json);
+				newEvents = db.convertFromJson(json);
 				
-				for (CityEvent e: events) {
+				for (CityEvent e: newEvents) {
+					// if event already exists set id attr to allow for an update rather than create
+					cursor = db.getCursor(CNAME_GID + " = " + e.gid, null);
+					if (cursor.getCount() > 0 && cursor.moveToFirst())
+						e.id = cursor.getLong(CINDEX_ID);
+					
 					db.save(e);
 				}
 				
@@ -145,14 +160,13 @@ public class CityEventsActivity extends ListActivity {
 			// save new timestamp
 			SharedPreferences.Editor prefsEditor = getSharedPreferences(PREFS, MODE_PRIVATE).edit();
 			SimpleDateFormat formatter = new SimpleDateFormat(ISO8601);
-			String updatedTimestamp = formatter.format(new Date());
+			formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
 			
-			Date d;
-	
+			lastSyncTimeStamp = formatter.format(new Date());
 			
-			prefsEditor.putString(LAST_SYNC_DATE, updatedTimestamp);
+			prefsEditor.putString(LAST_SYNC_DATE, lastSyncTimeStamp);
 			prefsEditor.commit();
-			
+
 			return null;
 		}
 
@@ -163,13 +177,13 @@ public class CityEventsActivity extends ListActivity {
 		
 		@Override
 		protected void onPostExecute(Void result) {
-			CityEventDB db = new CityEventDB(CityEventsActivity.this);
-			String filter = CNAME_UPDATED_AT + "> '" + lastSyncTimeStamp + "'";
-			ArrayList<CityEvent> newEvents = db.getList(filter, CityEventDB.CNAME_STARTS_AT);
 			
-			cityEvents.addAll(0, newEvents);
-			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-			
+			if (newEvents.size() > 0) {
+				cityEvents.addAll(0, newEvents);
+				Collections.sort(cityEvents);
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+			}
+
 			setProgressBarIndeterminateVisibility(false);
 		}
 	}
@@ -208,6 +222,9 @@ public class CityEventsActivity extends ListActivity {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			finally {
+				db.close();
+			}
 			
 			return null;
 		}
@@ -230,6 +247,7 @@ public class CityEventsActivity extends ListActivity {
 			// save timestamp to allow for later syncing of new events			
 			SharedPreferences.Editor prefs = getSharedPreferences(PREFS, MODE_PRIVATE).edit();
 			SimpleDateFormat formatter = new SimpleDateFormat(ISO8601);
+			formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
 			String stamp = formatter.format(new Date());
 			
 			prefs.putString( LAST_SYNC_DATE, stamp );

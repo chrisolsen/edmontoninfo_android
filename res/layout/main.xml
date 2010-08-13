@@ -1,53 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<TableLayout 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">    
     
-    <Button android:id="@+id/btn_schools"
-        android:layout_height="wrap_content"
+    <TableRow
         android:layout_width="fill_parent"
-        android:text="Schools" />
-        
-    <Button android:id="@+id/btn_police_stations"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        style="Widget.ListView.Header"
-        android:text="Police Stations" />
-        
-    <Button android:id="@+id/btn_fire_stations"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="Fire Stations" />
-        
-    <Button android:id="@+id/btn_community_league_centers"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="Community League Centres" />
-        
-    <Button android:id="@+id/btn_libraries"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="Libraries" />
-        
-    <Button android:id="@+id/btn_parks"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="Parks" />
-        
-    <Button android:id="@+id/btn_rec_facilities"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="Rec Facilities" />        
-        
-    <Button android:id="@+id/btn_field_status"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="Field Status" />
-        
-    <Button android:id="@+id/btn_city_events"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="City Events" />        
+        android:layout_height="wrap_content">
+        <com.chrisolsen.edmontoninfo.views.ImageTextButton android:id="@+id/itb_schools" android:layout_gravity="center_horizontal" android:layout_weight="1" />
+        <com.chrisolsen.edmontoninfo.views.ImageTextButton android:id="@+id/itb_city_events" android:layout_gravity="center_horizontal" android:layout_weight="1" />
+    </TableRow>
 
-</LinearLayout>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <com.chrisolsen.edmontoninfo.views.ImageTextButton android:id="@+id/itb_libraries" android:layout_gravity="center_horizontal" android:layout_weight="1" />
+        <com.chrisolsen.edmontoninfo.views.ImageTextButton android:id="@+id/itb_parks" android:layout_gravity="center_horizontal" android:layout_weight="1" />
+    </TableRow>
+    
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <com.chrisolsen.edmontoninfo.views.ImageTextButton android:id="@+id/itb_rec_facilities" android:layout_gravity="center_horizontal" android:layout_weight="1" />
+        <com.chrisolsen.edmontoninfo.views.ImageTextButton android:id="@+id/itb_field_status" android:layout_weight="1" />
+    </TableRow>
+    
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <com.chrisolsen.edmontoninfo.views.ImageTextButton android:id="@+id/itb_fire_stations" android:layout_gravity="center_horizontal" android:layout_weight="1" />
+        <com.chrisolsen.edmontoninfo.views.ImageTextButton android:id="@+id/itb_police_stations" android:layout_gravity="center_horizontal" android:layout_weight="1" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <com.chrisolsen.edmontoninfo.views.ImageTextButton android:id="@+id/itb_community_league_centers" android:layout_gravity="center_horizontal" android:gravity="center_horizontal" />
+    </TableRow>
+
+</TableLayout>
+</ScrollView>

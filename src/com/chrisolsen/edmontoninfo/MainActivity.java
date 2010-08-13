@@ -64,9 +64,11 @@ public class MainActivity extends Activity implements OnClickListener {
     	case TAG_CITY_EVENTS:
     		intent = new Intent(MainActivity.this, CityEventsActivity.class);
     		break;
+    		
     	case TAG_COMMUNITY_LEAGUE_CENTERS:
     		intent = new Intent(MainActivity.this, CommunityLeagueCentersActivity.class);
     		break;
+    		
     	case TAG_FIELD_STATUS:
     		intent = new Intent(MainActivity.this, FieldStatusActivity.class);
     		break;
@@ -94,6 +96,7 @@ public class MainActivity extends Activity implements OnClickListener {
     	case TAG_SCHOOLS:
     		intent = new Intent(MainActivity.this, SchoolsActivity.class);
     		break;
+    		
     	default:
     		Log.d("Invalid Parent", tag + "");
     	}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">eInfo</string>
+    <string name="app_name">EInfo</string>
     
     <!-- Imports -->
     <string name="import_url_schools">http://edmontoninfoapp.com/schools</string>

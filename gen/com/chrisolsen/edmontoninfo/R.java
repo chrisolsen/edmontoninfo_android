@@ -141,10 +141,9 @@ public final class R {
         public static final int listview_header_text=0x7f07000b;
         public static final int mainlayout=0x7f070005;
         public static final int map_context_address=0x7f070015;
-        public static final int map_context_email=0x7f070019;
-        public static final int map_context_monitor=0x7f070017;
-        public static final int map_context_phone=0x7f070018;
-        public static final int map_context_streetview=0x7f07001a;
+        public static final int map_context_email=0x7f070018;
+        public static final int map_context_phone=0x7f070017;
+        public static final int map_context_streetview=0x7f070019;
         public static final int map_context_website=0x7f070016;
         public static final int mapview=0x7f070006;
     }
@@ -190,7 +189,7 @@ public final class R {
         public static final int TextAppearance_Button=0x7f060002;
         public static final int TextAppearance_EditText=0x7f060003;
         public static final int TextAppearance_WindowTitle=0x7f060001;
-        public static final int Theme_EdmontonInfo=0x7f060019;
+        public static final int Theme_EdmontonInfo=0x7f060015;
         /**  Widgets 
          */
         public static final int Widget=0x7f060005;
@@ -209,20 +208,14 @@ public final class R {
         public static final int list_view_image_icon=0x7f06000f;
         public static final int list_view_image_text=0x7f060010;
         public static final int list_view_more_details=0x7f06000e;
-        public static final int map_context_address=0x7f060014;
-        public static final int map_context_image=0x7f060012;
-        public static final int map_context_label=0x7f060013;
-        /**  MapContextMenu 
-         */
-        public static final int map_context_row=0x7f060011;
         /**  Custom 
          */
         public static final int page_header=0x7f06000b;
         /**  Table Row 
          */
-        public static final int table_row_label=0x7f060015;
-        public static final int table_row_value=0x7f060016;
-        public static final int table_row_vertical_label=0x7f060017;
-        public static final int table_row_vertical_value=0x7f060018;
+        public static final int table_row_label=0x7f060011;
+        public static final int table_row_value=0x7f060012;
+        public static final int table_row_vertical_label=0x7f060013;
+        public static final int table_row_vertical_value=0x7f060014;
     }
 }

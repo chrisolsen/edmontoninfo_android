@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
 
 public class MainActivity extends Activity implements OnClickListener {
     	
@@ -30,58 +29,31 @@ public class MainActivity extends Activity implements OnClickListener {
         ImageTextButton b;
         
         b = (ImageTextButton)findViewById(R.id.itb_city_events);
-        b.image.setBackgroundResource(R.drawable.main_city_event_icon);
-        b.text.setText("City Events");
-        b.tag = TAG_CITY_EVENTS;
-        b.setOnClickListener(this);
+        b.bind(R.drawable.main_city_event_icon, "City Events", TAG_CITY_EVENTS, this);
         
         b = (ImageTextButton)findViewById(R.id.itb_community_league_centers);
-        b.image.setBackgroundResource(R.drawable.main_community_league_center_icon);
-        b.text.setText("Community\nLeague Centres");
-        b.tag = TAG_COMMUNITY_LEAGUE_CENTERS;
-        b.setOnClickListener(this);
+        b.bind(R.drawable.main_community_league_center_icon, "Community\nLeague Centres", TAG_COMMUNITY_LEAGUE_CENTERS, this);
         
         b = (ImageTextButton)findViewById(R.id.itb_field_status);
-        b.image.setBackgroundResource(R.drawable.main_field_status_icon);
-        b.text.setText("Field Status");
-        b.tag = TAG_FIELD_STATUS;
-        b.setOnClickListener(this);
+        b.bind(R.drawable.main_field_status_icon, "Field Status", TAG_FIELD_STATUS, this);
         
         b = (ImageTextButton)findViewById(R.id.itb_fire_stations);
-        b.image.setBackgroundResource(R.drawable.main_fire_station_icon);
-        b.text.setText("Fire Stations");
-        b.tag = TAG_FIRE_STATIONS;
-        b.setOnClickListener(this);
+        b.bind(R.drawable.main_fire_station_icon, "Fire Stations", TAG_FIRE_STATIONS, this);
         
         b = (ImageTextButton)findViewById(R.id.itb_libraries);
-        b.image.setBackgroundResource(R.drawable.main_library_icon);
-        b.text.setText("Libraries");
-        b.tag = TAG_LIBRARIES;
-        b.setOnClickListener(this);
+        b.bind(R.drawable.main_library_icon, "Libraries", TAG_LIBRARIES, this);
         
         b = (ImageTextButton)findViewById(R.id.itb_parks);
-        b.image.setBackgroundResource(R.drawable.main_park_icon);
-        b.text.setText("Parks");
-        b.tag = TAG_PARKS;
-        b.setOnClickListener(this);
+        b.bind(R.drawable.main_park_icon, "Parks", TAG_PARKS, this);
         
         b = (ImageTextButton)findViewById(R.id.itb_police_stations);
-        b.image.setBackgroundResource(R.drawable.main_police_station_icon);
-        b.text.setText("Police Stations");
-        b.tag = TAG_POLICE_STATIONS;
-        b.setOnClickListener(this);
-        
+        b.bind(R.drawable.main_police_station_icon, "Police Stations", TAG_POLICE_STATIONS, this);
+      
         b = (ImageTextButton)findViewById(R.id.itb_rec_facilities);
-        b.image.setBackgroundResource(R.drawable.main_rec_facility_icon);
-        b.text.setText("Rec Facilities");
-        b.tag = TAG_REC_FACILITIES;
-        b.setOnClickListener(this);
+        b.bind(R.drawable.main_rec_facility_icon, "Rec Facilities", TAG_REC_FACILITIES, this);
         
         b = (ImageTextButton)findViewById(R.id.itb_schools);
-        b.image.setBackgroundResource(R.drawable.main_school_icon);
-        b.text.setText("Schools");
-        b.tag = TAG_SCHOOLS;
-        b.setOnClickListener(this);
+        b.bind(R.drawable.main_school_icon, "Schools", TAG_SCHOOLS, this);
     }
    
 	public void onClick(View v) {
@@ -89,33 +61,33 @@ public class MainActivity extends Activity implements OnClickListener {
     	int tag = new Integer(v.getTag().toString());
     	
     	switch( tag ) {
-    	case R.id.itb_city_events:
+    	case TAG_CITY_EVENTS:
     		intent = new Intent(MainActivity.this, CityEventsActivity.class);
     		break;
-    	case R.id.itb_community_league_centers:
+    	case TAG_COMMUNITY_LEAGUE_CENTERS:
     		intent = new Intent(MainActivity.this, CommunityLeagueCentersActivity.class);
     		break;
-    	case R.id.itb_field_status:
+    	case TAG_FIELD_STATUS:
     		intent = new Intent(MainActivity.this, FieldStatusActivity.class);
     		break;
     		
-    	case R.id.itb_fire_stations:
+    	case TAG_FIRE_STATIONS:
     		intent = new Intent(MainActivity.this, FireStationsActivity.class);
     		break;
     		
-    	case R.id.itb_libraries:
+    	case TAG_LIBRARIES:
     		intent = new Intent(MainActivity.this, LibrariesActivity.class);
     		break;
 
-    	case R.id.itb_parks:
+    	case TAG_PARKS:
     		intent = new Intent(MainActivity.this, ParksActivity.class);
     		break;
     		
-    	case R.id.itb_police_stations:
+    	case TAG_POLICE_STATIONS:
     		intent = new Intent(MainActivity.this, PoliceStationsActivity.class);
     		break;
     		
-    	case R.id.itb_rec_facilities:
+    	case TAG_REC_FACILITIES:
     		intent = new Intent(MainActivity.this, RecFacilitiesActivity.class);
     		break;
     		

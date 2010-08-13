@@ -11,35 +11,26 @@ import android.widget.TextView;
 
 public class ImageTextButton extends RelativeLayout {
 
-	public ImageView	image;
-	public TextView 	text;
-	public int 			tag;
-	
 	public ImageTextButton(Context context) {
 		super(context);
-		bindControls();
 	}
 
 	public ImageTextButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		bindControls();
 	}
 
-	private void bindControls() {
+	public void bind(int imageId, String text, int tag, OnClickListener l) {
 		LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.image_text_button, this, true);
 		
-		text = (TextView)findViewById(R.id.image_text_button_text);
-		text.setTag(tag);
+		TextView textView = (TextView)findViewById(R.id.image_text_button_text);
+		textView.setTag(tag);
+		textView.setText(text);
+		textView.setOnClickListener(l);
 		
-		image = (ImageView)findViewById(R.id.image_text_button_image);
-		image.setTag(tag);
+		ImageView imageView = (ImageView)findViewById(R.id.image_text_button_image);
+		imageView.setTag(tag);
+		imageView.setBackgroundResource(imageId);
+		imageView.setOnClickListener(l);
 	}
-
-	@Override
-	public void setOnClickListener(OnClickListener l) {
-		text.setOnClickListener(l);
-		image.setOnClickListener(l);
-	}
-	
 }

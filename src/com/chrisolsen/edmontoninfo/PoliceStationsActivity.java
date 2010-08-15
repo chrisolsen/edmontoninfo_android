@@ -21,8 +21,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -43,6 +41,17 @@ public class PoliceStationsActivity extends ListActivity {
 		// bind police stations if they do exist
 		if ( bindStations() == 0 )
 			showDialog(DIALOG_IMPORT_DATA);
+	}
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		db.cursor.moveToPosition(position - 1);
+		PoliceStation station = new PoliceStation(db.cursor);
+		
+		Intent i = new Intent(PoliceStationsActivity.this, PoliceStationMapActivity.class);
+		i.putExtra(PoliceStationMapActivity.POLICE_STATION, station);
+		
+		startActivity(i);
 	}
 
 	/**
@@ -97,19 +106,6 @@ public class PoliceStationsActivity extends ListActivity {
 			listView.addHeaderView(header);
 			listView.addFooterView(header);
 			listView.setAdapter(adapter);
-			
-			listView.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-					db.cursor.moveToPosition(position);
-					PoliceStation station = new PoliceStation(db.cursor);
-					
-					Intent i = new Intent(PoliceStationsActivity.this, PoliceStationMapActivity.class);
-					i.putExtra(PoliceStationMapActivity.POLICE_STATION, station);
-					
-					startActivity(i);
-				}
-			});
 		}
 		
 		return c.getCount();

@@ -21,7 +21,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -29,28 +28,12 @@ import android.widget.TextView;
 public class LibrariesActivity extends ListActivity {
 
 	private static final int DIALOG_IMPORT_ID = 0;
-	private ListView _listView;
 	private LibraryDB _db;
 	private ProgressDialog importDialog;
 	
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
-		_listView = getListView();
-		_listView.setOnItemClickListener(new ListView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> av, View view, int position,
-					long rowId) {
-			
-				_db.cursor.moveToPosition(position);
-				Library lib = new Library(_db.cursor);
-				
-				Intent intent = new Intent(LibrariesActivity.this, LibraryMapActivity.class);
-				intent.putExtra(LibraryMapActivity.DATA_KEY, lib);
-				startActivity(intent);
-			}
-		});
 		
 		bindData();
 		
@@ -58,6 +41,16 @@ public class LibrariesActivity extends ListActivity {
 			showDialog(DIALOG_IMPORT_ID);
 	}
 	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		_db.cursor.moveToPosition(position - 1);
+		Library lib = new Library(_db.cursor);
+		
+		Intent intent = new Intent(LibrariesActivity.this, LibraryMapActivity.class);
+		intent.putExtra(LibraryMapActivity.DATA_KEY, lib);
+		startActivity(intent);
+	}
+
 	/**
 	 * Show custom dialogs
 	 */

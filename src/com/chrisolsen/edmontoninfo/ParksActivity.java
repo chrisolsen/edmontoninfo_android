@@ -21,7 +21,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -35,20 +34,6 @@ public class ParksActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
-		getListView().setOnItemClickListener(new ListView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> av, View view, int position,
-					long rowId) {
-			
-				_db.cursor.moveToPosition(position);
-				Park park = new Park(_db.cursor);
-				
-				Intent intent = new Intent(ParksActivity.this, ParkMapActivity.class);
-				intent.putExtra(ParkMapActivity.DATA_KEY, park);
-				startActivity(intent);
-			}
-		});
 		
 		bindData();
 		
@@ -56,6 +41,16 @@ public class ParksActivity extends ListActivity {
 			showDialog(DIALOG_IMPORT_ID);
 	}
 	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		_db.cursor.moveToPosition(position - 1);
+		Park park = new Park(_db.cursor);
+		
+		Intent intent = new Intent(ParksActivity.this, ParkMapActivity.class);
+		intent.putExtra(ParkMapActivity.DATA_KEY, park);
+		startActivity(intent);
+	}
+
 	/**
 	 * Show custom dialogs
 	 */

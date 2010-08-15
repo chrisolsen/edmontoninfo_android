@@ -22,7 +22,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -36,26 +35,24 @@ public class RecFacilitiesActivity extends ListActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		getListView().setOnItemClickListener(new ListView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> av, View view, int position,
-					long rowId) {
-			
-				_db.cursor.moveToPosition(position);
-				RecFacility rec = new RecFacility(_db.cursor);
-				
-				Intent intent = new Intent(RecFacilitiesActivity.this, RecFacilityMapActivity.class);
-				intent.putExtra(RecFacilityMapActivity.DATA_KEY, rec);
-				startActivity(intent);
-			}
-		});
-		
 		bindData();
 		
 		if ( _db.cursor.getCount() == 0 )
 			showDialog(DIALOG_IMPORT_ID);
 	}
 	
+	
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		_db.cursor.moveToPosition(position - 1);
+		RecFacility rec = new RecFacility(_db.cursor);
+		
+		Intent intent = new Intent(RecFacilitiesActivity.this, RecFacilityMapActivity.class);
+		intent.putExtra(RecFacilityMapActivity.DATA_KEY, rec);
+		startActivity(intent);
+	}
+
 	/**
 	 * Show custom dialogs
 	 */

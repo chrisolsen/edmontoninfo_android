@@ -22,10 +22,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 public class SchoolsActivity extends ListActivity {
@@ -41,27 +39,22 @@ public class SchoolsActivity extends ListActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		
-		listView = getListView();
-		listView.setOnItemClickListener( new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> av, View view, int position,
-					long rowId) {
-				
-				_db.cursor.moveToPosition( position );
-				School school = new School( _db.cursor );
-				
-				Intent intent = new Intent(SchoolsActivity.this, SchoolMapActivity.class);
-				intent.putExtra(SchoolMapActivity.DATA_KEY, school);
-				startActivity(intent);
-			}
-		});
-		
 		bindSchools();
 		
 		if ( _db.cursor.getCount() == 0 )
 			showDialog(DIALOG_IMPORT_ID);
 	}
 	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		_db.cursor.moveToPosition( position - 1 );
+		School school = new School( _db.cursor );
+
+		Intent intent = new Intent(SchoolsActivity.this, SchoolMapActivity.class);
+		intent.putExtra(SchoolMapActivity.DATA_KEY, school);
+		startActivity(intent);
+	}
+
 	/**
 	 * Show custom dialogs
 	 */

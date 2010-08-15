@@ -21,10 +21,8 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 public class CommunityLeagueCentersActivity extends ListActivity {
@@ -37,9 +35,7 @@ public class CommunityLeagueCentersActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		
 		setContentView(R.layout.list);
-		setTitle("Community League Centres");
 		
 		// bind centers if they do exist
 		if ( bindItems() == 0 )
@@ -66,6 +62,17 @@ public class CommunityLeagueCentersActivity extends ListActivity {
 		return null;
 	}
 	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		db.cursor.moveToPosition(position - 1);
+		CommunityLeagueCenter center = new CommunityLeagueCenter(db.cursor);
+		
+		Intent intent = new Intent( CommunityLeagueCentersActivity.this, CommunityLeagueCenterMapActivity.class );
+		intent.putExtra(CommunityLeagueCenterMapActivity.DATA_KEY, center);
+		
+		startActivity(intent);
+	}
+
 	/**
 	 * Bind fire stations and return the count of existing stations
 	 * @return
@@ -96,19 +103,6 @@ public class CommunityLeagueCentersActivity extends ListActivity {
 			listView.addHeaderView(header);
 			listView.addFooterView(header);
 			listView.setAdapter(adapter);
-			
-			listView.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-					db.cursor.moveToPosition(position);
-					CommunityLeagueCenter center = new CommunityLeagueCenter(db.cursor);
-					
-					Intent intent = new Intent( CommunityLeagueCentersActivity.this, CommunityLeagueCenterMapActivity.class );
-					intent.putExtra(CommunityLeagueCenterMapActivity.DATA_KEY, center);
-					
-					startActivity(intent);
-				}
-			});
 		}
 		
 		return c.getCount();

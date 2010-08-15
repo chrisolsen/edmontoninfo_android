@@ -21,10 +21,8 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 public class FireStationsActivity extends ListActivity {
@@ -41,6 +39,16 @@ private static final int DIALOG_IMPORT_DATA = 0;
 		// bind fire stations if they do exist
 		if ( bindStations() == 0 )
 			showDialog(DIALOG_IMPORT_DATA);
+	}
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		db.cursor.moveToPosition(position - 1);
+		FireStation station = new FireStation(db.cursor);
+		
+		Intent intent = new Intent( FireStationsActivity.this, FireStationMapActivity.class );
+		intent.putExtra(FireStationMapActivity.DATA_KEY, station);
+		startActivity(intent);
 	}
 
 	/**
@@ -96,17 +104,6 @@ private static final int DIALOG_IMPORT_DATA = 0;
 			listView.addHeaderView(header);
 			listView.addFooterView(header);
 			listView.setAdapter(adapter);
-			
-			listView.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-					db.cursor.moveToPosition(position);
-					FireStation station = new FireStation(db.cursor);
-					Intent intent = new Intent( FireStationsActivity.this, FireStationMapActivity.class );
-					intent.putExtra(FireStationMapActivity.DATA_KEY, station);
-					startActivity(intent);
-				}
-			});
 		}
 		
 		return c.getCount();

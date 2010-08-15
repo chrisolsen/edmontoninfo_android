@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">EInfo</string>
     
+    <string name="about">About</string>
+    
     <!-- Imports -->
     <string name="import_url_schools">http://edmontoninfoapp.com/schools</string>
     <string name="import_url_police_stations">http://edmontoninfoapp.com/police_stations</string>

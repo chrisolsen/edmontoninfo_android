@@ -47,7 +47,7 @@ public class FieldStatusActivity extends ListActivity {
 		View header = getLayoutInflater().inflate(R.layout.listview_header, null);
 		TextView headerText = (TextView)header.findViewById(R.id.listview_header_text);
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("E MMM d '@' hh:mm a");
+		SimpleDateFormat formatter = new SimpleDateFormat("'As of:' E MMM d '@' hh:mm a");
 		String formattedDate = formatter.format(fieldStates.get(0).updatedAt);
 		
 		headerText.setText(formattedDate);

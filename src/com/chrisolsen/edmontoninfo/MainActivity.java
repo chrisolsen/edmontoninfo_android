@@ -5,11 +5,13 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,9 +25,9 @@ public class MainActivity extends ListActivity {
 	private static final int TAG_SCHOOLS 					= 1;
 	private static final int TAG_REC_FACILITIES 			= 2;
 	private static final int TAG_POLICE_STATIONS 			= 3;
-	private static final int TAG_PARKS 						= 4;
-	private static final int TAG_LIBRARIES 					= 5;
-	private static final int TAG_FIRE_STATIONS 				= 6;
+	private static final int TAG_FIRE_STATIONS 				= 4;
+	private static final int TAG_PARKS 						= 5;
+	private static final int TAG_LIBRARIES 					= 6;
 	private static final int TAG_FIELD_STATUS 				= 7;
 	private static final int TAG_COMMUNITY_LEAGUE_CENTERS 	= 8;
 	
@@ -53,12 +55,18 @@ public class MainActivity extends ListActivity {
 		R.drawable.house
 	};
 	
+	private boolean isLdpi;
+	
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		
 		ListAdapter adapter = new ListAdapter(this);
 		setListAdapter(adapter);
+		
+        WindowManager w = getWindowManager();
+        Display d = w.getDefaultDisplay();
+        isLdpi = d.getHeight() <= 480; 
 	}
 	
 	@Override
@@ -142,7 +150,8 @@ public class MainActivity extends ListActivity {
 			View row = convertView;
 			if ( row == null ) {
 				LayoutInflater inflater = (LayoutInflater)getSystemService(Service.LAYOUT_INFLATER_SERVICE);
-				row = inflater.inflate(R.layout.listview_row_icon, null);
+				int layout = isLdpi ? R.layout.listview_row_icon_ldpi : R.layout.listview_row_icon;
+				row = inflater.inflate(layout, null);
 			}
 			
 			TextView textView 	= (TextView)row.findViewById( android.R.id.text1 );

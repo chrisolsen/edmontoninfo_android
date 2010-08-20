@@ -12,6 +12,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.chrisolsen.edmontoninfo.db.LibraryDB;
 import com.chrisolsen.edmontoninfo.models.Library;
+
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -110,10 +112,10 @@ public class LibrariesActivity extends ListActivity {
 	 * Import Data Thread
 	 * 	- pulls data from web service into the local database
 	 */
-	private class ImportData extends AsyncTask<Void, Integer, Void> {
+	private class ImportData extends AsyncTask<Void, Integer, Integer> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected Integer doInBackground(Void... params) {
 		
 			String url = getString(R.string.import_url_libraries);
 			
@@ -122,6 +124,7 @@ public class LibrariesActivity extends ListActivity {
 			ResponseHandler<String> handler = new BasicResponseHandler();
 			
 			LibraryDB db = new LibraryDB(LibrariesActivity.this);
+			int count = 0;
 			
 			// list of existing school names
 			Cursor c = db.getCursor(null, null);
@@ -135,7 +138,7 @@ public class LibrariesActivity extends ListActivity {
 				ArrayList<Library> libs = db.convertFromJson(rawJson);
 				Library lib;
 				
-				int count = libs.size();
+				count = libs.size();
 				int savedCount = c.getCount();  // pre-existing schools from previous incomplete import
 				
 				for (int i = 0; i < count; i++) {
@@ -157,7 +160,7 @@ public class LibrariesActivity extends ListActivity {
 				db.close();
 			}
 			
-			return null;
+			return count;
 		}
 		
 		@Override 
@@ -170,9 +173,18 @@ public class LibrariesActivity extends ListActivity {
 		}
 		
 		@Override 
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Integer result) {
 			dismissDialog(DIALOG_IMPORT_ID);
-			bindData();
+			
+			if ( result == 0) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(LibrariesActivity.this);
+				builder
+					.setNegativeButton("Close", null)
+					.setMessage("Unable to connect to the server")
+					.show();
+			}
+			else
+				bindData();
 		}
 	}
 	

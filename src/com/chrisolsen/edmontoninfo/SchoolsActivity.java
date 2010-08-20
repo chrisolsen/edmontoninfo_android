@@ -13,6 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.chrisolsen.edmontoninfo.db.SchoolsDB;
 import com.chrisolsen.edmontoninfo.models.School;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -112,10 +113,10 @@ public class SchoolsActivity extends ListActivity {
 	 * Import Data Thread
 	 * 	- pulls data from web service into the local database
 	 */
-	private class ImportSchoolData extends AsyncTask<Void, Integer, Void> {
+	private class ImportSchoolData extends AsyncTask<Void, Integer, Integer> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected Integer doInBackground(Void... params) {
 		
 			String url = getString(R.string.import_url_schools);
 			
@@ -124,6 +125,7 @@ public class SchoolsActivity extends ListActivity {
 			ResponseHandler<String> handler = new BasicResponseHandler();
 			
 			SchoolsDB db = new SchoolsDB(SchoolsActivity.this);
+			int schoolCount = 0;
 			
 			// list of existing school names
 			Cursor c = db.getCursor(null, null);
@@ -137,7 +139,7 @@ public class SchoolsActivity extends ListActivity {
 				ArrayList<School> schools = db.convertFromJson(rawJson);
 				School school;
 				
-				int schoolCount = schools.size();
+				schoolCount = schools.size();
 				int savedSchoolCount = c.getCount();  // pre-existing schools from previous incomplete import
 				
 				for (int i = 0; i < schoolCount; i++) {
@@ -159,7 +161,7 @@ public class SchoolsActivity extends ListActivity {
 				db.close();
 			}
 			
-			return null;
+			return schoolCount;
 		}
 		
 		@Override 
@@ -172,8 +174,17 @@ public class SchoolsActivity extends ListActivity {
 		}
 		
 		@Override 
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Integer result) {
 			dismissDialog(DIALOG_IMPORT_ID);
+			
+			if ( result == 0) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(SchoolsActivity.this);
+				builder
+					.setNegativeButton("Close", null)
+					.setMessage("Unable to connect to the server")
+					.show();
+			}
+			else
 			bindSchools();
 		}
 	}

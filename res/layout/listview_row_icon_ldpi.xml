@@ -7,19 +7,15 @@
   
     <ImageView
         android:id="@android:id/icon"
-        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     
     <TextView
         android:id="@android:id/text1"
         android:layout_toRightOf="@android:id/icon"
-        android:layout_centerVertical="true"
         android:paddingLeft="10dip"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-      
-    <ImageView style="@style/list_view_more_details" />
   
 </RelativeLayout>

@@ -13,6 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.chrisolsen.edmontoninfo.db.RecFacilityDB;
 import com.chrisolsen.edmontoninfo.models.RecFacility;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -112,10 +113,10 @@ public class RecFacilitiesActivity extends ListActivity {
 	 * Import Data Thread
 	 * 	- pulls data from web service into the local database
 	 */
-	private class ImportData extends AsyncTask<Void, Integer, Void> {
+	private class ImportData extends AsyncTask<Void, Integer, Integer> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected Integer doInBackground(Void... params) {
 		
 			String url = getString(R.string.import_url_rec_facilities);
 			
@@ -124,6 +125,7 @@ public class RecFacilitiesActivity extends ListActivity {
 			ResponseHandler<String> handler = new BasicResponseHandler();
 			
 			RecFacilityDB db = new RecFacilityDB(RecFacilitiesActivity.this);
+			int count = 0;
 			
 			// list of existing school names
 			Cursor c = db.getCursor(null, null);
@@ -137,7 +139,7 @@ public class RecFacilitiesActivity extends ListActivity {
 				ArrayList<RecFacility> facilities = db.convertFromJson(rawJson);
 				RecFacility recFacility;
 				
-				int count = facilities.size();
+				count = facilities.size();
 				int savedCount = c.getCount();  // pre-existing schools from previous incomplete import
 				
 				for (int i = 0; i < count; i++) {
@@ -159,7 +161,7 @@ public class RecFacilitiesActivity extends ListActivity {
 				db.close();
 			}
 			
-			return null;
+			return count;
 		}
 		
 		@Override 
@@ -172,9 +174,18 @@ public class RecFacilitiesActivity extends ListActivity {
 		}
 		
 		@Override 
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Integer result) {
 			dismissDialog(DIALOG_IMPORT_ID);
-			bindData();
+			
+			if ( result == 0) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(RecFacilitiesActivity.this);
+				builder
+					.setNegativeButton("Close", null)
+					.setMessage("Unable to connect to the server")
+					.show();
+			}
+			else
+				bindData();
 		}
 	}
 }

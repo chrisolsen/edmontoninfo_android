@@ -12,6 +12,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.chrisolsen.edmontoninfo.db.Park;
 import com.chrisolsen.edmontoninfo.db.ParkDB;
+
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -110,10 +112,10 @@ public class ParksActivity extends ListActivity {
 	 * Import Data Thread
 	 * 	- pulls data from web service into the local database
 	 */
-	private class ImportData extends AsyncTask<Void, Integer, Void> {
+	private class ImportData extends AsyncTask<Void, Integer, Integer> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected Integer doInBackground(Void... params) {
 		
 			String url = getString(R.string.import_url_parks);
 			
@@ -122,6 +124,7 @@ public class ParksActivity extends ListActivity {
 			ResponseHandler<String> handler = new BasicResponseHandler();
 			
 			ParkDB db = new ParkDB(ParksActivity.this);
+			int count = 0;
 			
 			// list of existing school names
 			Cursor c = db.getCursor(null, null);
@@ -135,7 +138,7 @@ public class ParksActivity extends ListActivity {
 				ArrayList<Park> parks = db.convertFromJson(rawJson);
 				Park park;
 				
-				int count = parks.size();
+				count = parks.size();
 				int savedCount = c.getCount();  // pre-existing schools from previous incomplete import
 				
 				for (int i = 0; i < count; i++) {
@@ -157,7 +160,7 @@ public class ParksActivity extends ListActivity {
 				db.close();
 			}
 			
-			return null;
+			return count;
 		}
 		
 		@Override 
@@ -170,9 +173,19 @@ public class ParksActivity extends ListActivity {
 		}
 		
 		@Override 
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Integer result) {
+			
 			dismissDialog(DIALOG_IMPORT_ID);
-			bindData();
+			
+			if ( result == 0) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(ParksActivity.this);
+				builder
+					.setNegativeButton("Close", null)
+					.setMessage("Unable to connect to the server")
+					.show();
+			}
+			else
+				bindData();
 		}
 	}	
 }

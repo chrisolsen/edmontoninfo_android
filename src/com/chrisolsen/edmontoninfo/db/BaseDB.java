@@ -7,7 +7,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public abstract class BaseDB extends SQLiteOpenHelper {
 
@@ -46,7 +45,7 @@ public abstract class BaseDB extends SQLiteOpenHelper {
 		
 	// Lookups
 	public Cursor getCursor(String where, String orderBy) {
-		Log.d("SQL", "select * from " + getTableName() + " where " + where);
+		//Log.d("SQL", "select * from " + getTableName() + " where " + where);
 		
 		SQLiteDatabase db = getWritableDatabase();
 		this.cursor = db.query(getTableName(), null, where, null, null, null, orderBy);
@@ -64,12 +63,12 @@ public abstract class BaseDB extends SQLiteOpenHelper {
 		
 		long id = model.id;
 		if ( id != 0 ) {
-			Log.d("SQL", "update " + getTableName() + " where id = " + model.id);
+			//Log.d("SQL", "update " + getTableName() + " where id = " + model.id);
 			
 			db.update(getTableName(), vals, ID + " = " + Long.toString(id), null);
 		}
 		else {
-			Log.d("SQL", "insert into " + getTableName());
+			//Log.d("SQL", "insert into " + getTableName());
 			
 			vals.remove(ID);
 			id = db.insert(getTableName(), getColumnHackName(), vals);
@@ -79,7 +78,7 @@ public abstract class BaseDB extends SQLiteOpenHelper {
 	}
 	
 	public boolean delete(BaseModel model) {
-		Log.d("SQL", "delete from " + getTableName() + " where " + model.id);
+		//Log.d("SQL", "delete from " + getTableName() + " where " + model.id);
 		
 		SQLiteDatabase db = getWritableDatabase();
 		db.delete(getTableName(), ID + " = " + Long.toString(model.id), null);

@@ -13,6 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.chrisolsen.edmontoninfo.db.FireStationsDB;
 import com.chrisolsen.edmontoninfo.models.FireStation;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -114,28 +115,28 @@ private static final int DIALOG_IMPORT_DATA = 0;
 	 * @author chris
 	 *
 	 */
-	private class ImportDataAsyncTask extends AsyncTask<Void, Integer, Void> {
+	private class ImportDataAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
 		@Override
-		protected Void doInBackground(Void... arg0) {
+		protected Integer doInBackground(Void... arg0) {
 			
 			HttpClient client = new DefaultHttpClient();
 			HttpGet request = new HttpGet( getString(R.string.import_url_fire_stations) );
 			ResponseHandler<String> handler = new BasicResponseHandler();
 			
 			FireStationsDB db = new FireStationsDB(FireStationsActivity.this);
+			int count = 0;
 			
 			try {
 				String rawJSON = client.execute(request, handler);
 				ArrayList<FireStation> stations = db.convertFromJSON(rawJSON);
 				
 				int totalCount = stations.size();
-				int currentIndex = 0;
 				
 				for (FireStation station: stations) {
 					db.save(station);
-					currentIndex++;
-					publishProgress( new Integer(currentIndex * 100 / totalCount) );
+					count++;
+					publishProgress( new Integer(count * 100 / totalCount) );
 				}
 				
 			} catch (ClientProtocolException e) {
@@ -147,13 +148,22 @@ private static final int DIALOG_IMPORT_DATA = 0;
 				db.close();
 			}
 			
-			return null;
+			return count;
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Integer result) {
 			dismissDialog( DIALOG_IMPORT_DATA );
-			bindStations();
+			
+			if ( result == 0) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(FireStationsActivity.this);
+				builder
+					.setNegativeButton("Close", null)
+					.setMessage("Unable to connect to the server")
+					.show();
+			}
+			else
+				bindStations();
 		}
 
 		@Override

@@ -28,7 +28,7 @@ public class MapContextActivity extends Activity implements OnClickListener {
 		// email
 		b = findViewById( R.id.map_context_email );
 		b.setOnClickListener(this);
-		if ( values.emailAddress == null )
+		if ( values.emailAddress == null || values.emailAddress == "" )
 			b.setVisibility(View.GONE);
 		
 		// website

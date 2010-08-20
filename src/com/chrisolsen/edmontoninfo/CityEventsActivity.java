@@ -21,6 +21,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.chrisolsen.edmontoninfo.db.CityEventDB;
 import com.chrisolsen.edmontoninfo.models.CityEvent;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -148,6 +149,16 @@ public class CityEventsActivity extends ListActivity {
 					db.save(e);
 				}
 				
+				// save new timestamp
+				SharedPreferences.Editor prefsEditor = getSharedPreferences(PREFS, MODE_PRIVATE).edit();
+				SimpleDateFormat formatter = new SimpleDateFormat(ISO8601);
+				formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+				
+				lastSyncTimeStamp = formatter.format(new Date());
+				
+				prefsEditor.putString(LAST_SYNC_DATE, lastSyncTimeStamp);
+				prefsEditor.commit();
+				
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -156,16 +167,6 @@ public class CityEventsActivity extends ListActivity {
 			finally {
 				db.close();
 			}
-			
-			// save new timestamp
-			SharedPreferences.Editor prefsEditor = getSharedPreferences(PREFS, MODE_PRIVATE).edit();
-			SimpleDateFormat formatter = new SimpleDateFormat(ISO8601);
-			formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
-			
-			lastSyncTimeStamp = formatter.format(new Date());
-			
-			prefsEditor.putString(LAST_SYNC_DATE, lastSyncTimeStamp);
-			prefsEditor.commit();
 
 			return null;
 		}
@@ -191,10 +192,10 @@ public class CityEventsActivity extends ListActivity {
 	/**
 	 * Background thread to import events
 	 */
-	private class ImportCityEvents extends AsyncTask<Void, Integer, Void> {
+	private class ImportCityEvents extends AsyncTask<Void, Integer, Integer> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected Integer doInBackground(Void... params) {
 			
 			final String url = getString(R.string.import_url_city_events); 
 			HttpGet getter = new HttpGet(url);
@@ -202,12 +203,13 @@ public class CityEventsActivity extends ListActivity {
 			ResponseHandler<String> handler = new BasicResponseHandler();
 			
 			CityEventDB db = new CityEventDB(CityEventsActivity.this);
+			int eventCount = 0;
 			
 			try {
 				String json = client.execute(getter, handler);
 				ArrayList<CityEvent> events = db.convertFromJson(json);
 				
-				int eventCount = events.size();
+				eventCount = events.size();
 				int currentIndex = 0;
 				
 				for (CityEvent e: events) {
@@ -226,7 +228,7 @@ public class CityEventsActivity extends ListActivity {
 				db.close();
 			}
 			
-			return null;
+			return eventCount;
 		}
 
 		@Override
@@ -236,22 +238,32 @@ public class CityEventsActivity extends ListActivity {
 		}
 		
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Integer result) {
+			
 			dismissDialog(DIALOG_IMPORT_ID);
 			
-			CityEventDB db = new CityEventDB(CityEventsActivity.this);
-			cityEvents = db.getList(null, CityEventDB.CNAME_STARTS_AT);
-
-			bindData( cityEvents );
-			
-			// save timestamp to allow for later syncing of new events			
-			SharedPreferences.Editor prefs = getSharedPreferences(PREFS, MODE_PRIVATE).edit();
-			SimpleDateFormat formatter = new SimpleDateFormat(ISO8601);
-			formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
-			String stamp = formatter.format(new Date());
-			
-			prefs.putString( LAST_SYNC_DATE, stamp );
-			prefs.commit();
+			if ( result == 0) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(CityEventsActivity.this);
+				builder
+					.setNegativeButton("Close", null)
+					.setMessage("Unable to connect to the server")
+					.show();
+			}
+			else {
+				CityEventDB db = new CityEventDB(CityEventsActivity.this);
+				cityEvents = db.getList(null, CityEventDB.CNAME_STARTS_AT);
+	
+				bindData( cityEvents );
+				
+				// save timestamp to allow for later syncing of new events			
+				SharedPreferences.Editor prefs = getSharedPreferences(PREFS, MODE_PRIVATE).edit();
+				SimpleDateFormat formatter = new SimpleDateFormat(ISO8601);
+				formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+				String stamp = formatter.format(new Date());
+				
+				prefs.putString( LAST_SYNC_DATE, stamp );
+				prefs.commit();
+			}
 		}		
 	}
 	

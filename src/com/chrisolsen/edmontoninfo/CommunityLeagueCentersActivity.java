@@ -13,6 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.chrisolsen.edmontoninfo.db.CommunityLeagueCentersDB;
 import com.chrisolsen.edmontoninfo.models.CommunityLeagueCenter;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -50,7 +51,7 @@ public class CommunityLeagueCentersActivity extends ListActivity {
 		case DIALOG_IMPORT_DATA:
 			importDialog = new ProgressDialog(CommunityLeagueCentersActivity.this);
 			importDialog.setCancelable(false);
-			importDialog.setMessage("Importing Community League Centers...");
+			importDialog.setMessage("Importing Community League Centres...");
 			importDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 			
 			ImportDataAsyncTask importThread = new ImportDataAsyncTask();
@@ -113,22 +114,23 @@ public class CommunityLeagueCentersActivity extends ListActivity {
 	 * @author chris
 	 *
 	 */
-	private class ImportDataAsyncTask extends AsyncTask<Void, Integer, Void> {
+	private class ImportDataAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
 		@Override
-		protected Void doInBackground(Void... arg0) {
+		protected Integer doInBackground(Void... arg0) {
 			
 			HttpClient client = new DefaultHttpClient();
 			HttpGet request = new HttpGet( getString(R.string.import_url_community_league_centers) );
 			ResponseHandler<String> handler = new BasicResponseHandler();
 			
 			CommunityLeagueCentersDB db = new CommunityLeagueCentersDB(CommunityLeagueCentersActivity.this);
+			int totalCount = 0;
 			
 			try {
 				String rawJSON = client.execute(request, handler);
 				ArrayList<CommunityLeagueCenter> centers = db.convertFromJSON(rawJSON);
 				
-				int totalCount = centers.size();
+				totalCount = centers.size();
 				int currentIndex = 0;
 				
 				for (CommunityLeagueCenter center: centers) {
@@ -146,13 +148,22 @@ public class CommunityLeagueCentersActivity extends ListActivity {
 				db.close();
 			}
 			
-			return null;
+			return totalCount;
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Integer result) {
 			dismissDialog( DIALOG_IMPORT_DATA );
-			bindItems();
+			
+			if ( result == 0) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(CommunityLeagueCentersActivity.this);
+				builder
+					.setNegativeButton("Close", null)
+					.setMessage("Unable to connect to the server")
+					.show();
+			}
+			else
+				bindItems();
 		}
 
 		@Override

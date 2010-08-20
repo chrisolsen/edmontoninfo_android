@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import static com.chrisolsen.edmontoninfo.Global.*;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -47,7 +48,7 @@ public class FieldStatusActivity extends ListActivity {
 		View header = getLayoutInflater().inflate(R.layout.listview_header, null);
 		TextView headerText = (TextView)header.findViewById(R.id.listview_header_text);
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("'As of:' E MMM d '@' hh:mm a");
+		SimpleDateFormat formatter = new SimpleDateFormat("'As of:' E MMM d '@' h:mm a");
 		String formattedDate = formatter.format(fieldStates.get(0).updatedAt);
 		
 		headerText.setText(formattedDate);
@@ -125,7 +126,16 @@ public class FieldStatusActivity extends ListActivity {
 		@Override 
 		protected void onPostExecute(ArrayList<FieldState> states) {
 			dismissDialog(DIALOG_IMPORT_ID);
-			bindData(states);
+			
+			if ( states.size() == 0) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(FieldStatusActivity.this);
+				builder
+					.setNegativeButton("Close", null)
+					.setMessage("Unable to connect to the server")
+					.show();
+			}
+			else
+				bindData(states);
 		}
 		
 	}
